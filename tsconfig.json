@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // Версия ECMAScript
+    "module": "ESNext", // Поддержка ES-модулей
+    "moduleResolution": "node", // Разрешение модулей
+    "outDir": "./dist", // Папка для скомпилированных файлов
+    "rootDir": "./src", // Корневая папка
+    "strict": true, // Включить строгий режим
+    "esModuleInterop": true, // Для совместимости с CommonJS
+    "skipLibCheck": true // Пропустить проверку типов в библиотеках
+  },
+  "include": ["src/**/*.ts"], // Включить все .ts файлы в src
+  "exclude": ["node_modules", "**/*.spec.ts"] // Исключить node_modules и тестовые файлы
+}
