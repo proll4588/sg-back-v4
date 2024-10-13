@@ -11,15 +11,12 @@ type User {
 }
 
 type Query {
-  getUsers: [User]
-  # Auth #
-  # login(login: String!, password: String!): LoginResponse
+  # User #
+  getUser: User
+  getUsers(roleId: Int): [User]!
+  getUsersRoles: [Role]!
+  getStudentUsers: [User]!
   # ==== #
-
-  # getUsersRoles: [Role]
-  # getUsers(roleId: Int): [User]
-  # getUser: User
-  # getStudentUsers: [User]
 
   # Test one #
   # getTestOneProcess: [TestOneProcess]
@@ -39,10 +36,13 @@ type Query {
 }
 
 type Mutation {
-  hello: String
   # Auth #
-  # registration(login: String!, password: String!, roleId: Int!): Token
-  # deleteUser(userId: Int!): Boolean
+  login(login: String!, password: String!): LoginResponse
+  # ==== #
+
+  # User #
+  deleteUser(userId: Int!): Boolean!
+  createUser(login: String!, password: String!, roleId: Int!): User!
   # ==== #
 
   # Test one #
