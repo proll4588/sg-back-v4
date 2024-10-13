@@ -1,19 +1,24 @@
-import { getAllUsers } from '../models/user.js';
-import { checkResolver } from './checkResolver.js';
 import { Resolvers } from './type.js';
-
-const qGetAllUsers = async () => {
-  return await getAllUsers();
-};
+import { createUserResolver } from './user/mutation/createUser.js';
+import { deleteUserResolver } from './user/mutation/deleteUser.js';
+import { getStudentsUsersResolver } from './user/query/getStudentUsers.js';
+import { getUserResolver } from './user/query/getUser.js';
+import { getUsersResolver } from './user/query/getUsers.js';
+import { getUsersRolesResolver } from './user/query/getUsersRoles.js';
 
 export const resolvers: Resolvers = {
   Query: {
-    getUsers: async (...args) =>
-      await checkResolver<{}, { id: number }[]>(...args)([1])(qGetAllUsers),
+    /* User */
+    getUser: getUserResolver,
+    getUsers: getUsersResolver,
+    getUsersRoles: getUsersRolesResolver,
+    getStudentUsers: getStudentsUsersResolver,
+    /* ==== */
   },
   Mutation: {
-    hello(parent, args, context, info) {
-      return '123';
-    },
+    /* User */
+    deleteUser: deleteUserResolver,
+    createUser: createUserResolver,
+    /* ==== */
   },
 };

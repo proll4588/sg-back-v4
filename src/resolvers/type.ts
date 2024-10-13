@@ -1,5 +1,11 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { ApolloContext } from '../context';
+import { ApolloContext } from '../context/type.js';
+import { GetUserResolverFun } from './user/query/getUser.js';
+import { GetUsersResolverFun } from './user/query/getUsers.js';
+import { GetUsersRolesResolverFun } from './user/query/getUsersRoles.js';
+import { GetStudentsUsersResolverFun } from './user/query/getStudentUsers.js';
+import { DeleteUserResolverFun } from './user/mutation/deleteUser.js';
+import { CreateUserResolverFun } from './user/mutation/createUser.js';
 
 export type ResolverFn<Args, ReturnType> = (
   parent: unknown,
@@ -10,10 +16,18 @@ export type ResolverFn<Args, ReturnType> = (
 
 export interface Resolvers {
   Query: {
-    getUsers: ResolverFn<{}, { id: number }[]>;
+    /* User */
+    getUser: GetUserResolverFun;
+    getUsers: GetUsersResolverFun;
+    getUsersRoles: GetUsersRolesResolverFun;
+    getStudentUsers: GetStudentsUsersResolverFun;
+    /* ==== */
   };
   Mutation: {
-    hello: ResolverFn<{}, string>;
+    /* User */
+    deleteUser: DeleteUserResolverFun;
+    createUser: CreateUserResolverFun;
+    /* ==== */
   };
 }
 
