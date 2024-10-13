@@ -2,6 +2,7 @@
 export interface UserType {
   id: number;
   login: string;
+  password: string;
   Role: RoleType;
   Student: StudentType | null;
 }

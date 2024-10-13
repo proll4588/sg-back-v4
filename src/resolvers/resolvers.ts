@@ -1,3 +1,4 @@
+import { loginResolver } from './auth/mutation/login.js';
 import { Resolvers } from './type.js';
 import { createUserResolver } from './user/mutation/createUser.js';
 import { deleteUserResolver } from './user/mutation/deleteUser.js';
@@ -19,6 +20,10 @@ export const resolvers: Resolvers = {
     /* User */
     deleteUser: deleteUserResolver,
     createUser: createUserResolver,
+    /* ==== */
+
+    /* Auth */
+    login: loginResolver,
     /* ==== */
   },
 };

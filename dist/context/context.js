@@ -2,11 +2,9 @@ import { verifyJWT } from '../auth/verifyJWT.js';
 import { ServerExceptions } from '../GraphQLError/type.js';
 import { throwNewGQLError } from '../GraphQLError/GraphQLError.js';
 export const context = async ({ req }) => {
-    const token = req.headers.authorization || '';
-    console.log('token >> ', token);
+    const token = req.headers.authorization;
     if (!token)
         return {};
-    console.log(verifyJWT(token));
     try {
         return verifyJWT(token);
     }

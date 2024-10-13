@@ -6,6 +6,7 @@ import { GetUsersRolesResolverFun } from './user/query/getUsersRoles.js';
 import { GetStudentsUsersResolverFun } from './user/query/getStudentUsers.js';
 import { DeleteUserResolverFun } from './user/mutation/deleteUser.js';
 import { CreateUserResolverFun } from './user/mutation/createUser.js';
+import { LoginResolverFun } from './auth/mutation/login.js';
 
 export type ResolverFn<Args, ReturnType> = (
   parent: unknown,
@@ -27,6 +28,10 @@ export interface Resolvers {
     /* User */
     deleteUser: DeleteUserResolverFun;
     createUser: CreateUserResolverFun;
+    /* ==== */
+
+    /* Auth */
+    login: LoginResolverFun;
     /* ==== */
   };
 }

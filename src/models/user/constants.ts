@@ -17,6 +17,7 @@ export const ROLE_DEF = {
 export const USER_DEF = {
   id: true,
   login: true,
+  password: true,
   Role: { select: ROLE_DEF },
   Student: { select: STUDENT_DEF },
 };

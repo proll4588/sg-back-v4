@@ -11,10 +11,6 @@ type User {
 }
 
 type Query {
-  # Auth #
-  # login(login: String!, password: String!): LoginResponse
-  # ==== #
-
   # User #
   getUser: User
   getUsers(roleId: Int): [User]!
@@ -40,6 +36,10 @@ type Query {
 }
 
 type Mutation {
+  # Auth #
+  login(login: String!, password: String!): LoginResponse
+  # ==== #
+
   # User #
   deleteUser(userId: Int!): Boolean!
   createUser(login: String!, password: String!, roleId: Int!): User!

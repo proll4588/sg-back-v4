@@ -28,6 +28,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.7.5",
     "@types/pdf-parse": "^1.1.4",

@@ -1,3 +1,4 @@
+import { loginResolver } from './auth/mutation/login.js';
 import { createUserResolver } from './user/mutation/createUser.js';
 import { deleteUserResolver } from './user/mutation/deleteUser.js';
 import { getStudentsUsersResolver } from './user/query/getStudentUsers.js';
@@ -17,6 +18,9 @@ export const resolvers = {
         /* User */
         deleteUser: deleteUserResolver,
         createUser: createUserResolver,
+        /* ==== */
+        /* Auth */
+        login: loginResolver,
         /* ==== */
     },
 };
