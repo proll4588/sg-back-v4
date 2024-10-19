@@ -19,19 +19,17 @@ type Query {
   # ==== #
 
   # Test one #
-  # getTestOneProcess: [TestOneProcess]
-  # getTestOneQuestions: [TestOneQuestions!]
-  # getTestOne(userId: Int!): TestOneProcess
-
-  # getTestOneResults: [TestOneResult!]!
+  getTestOneQuestions: [TestOneQuestions!]!
+  getAllTestOneProcess: [TestOneProcess]!
+  getTestOneProcessByUserId(userId: Int!): TestOneProcess
+  getTestOneResults: [TestOneResult!]!
   # ======== #
 
   # Test two #
-  # getTestTwoProcess: [TestTwoProcess]
-  # getTestTwoQuestions: [TestTwoQuestions!]
-  # getTestTwo(userId: Int!): TestTwoProcess
-
-  # getTestTwoResults: [TestTwoResult!]!
+  getAllTestTwoProcess: [TestTwoProcess!]!
+  getTestTwoQuestions: [TestTwoQuestions!]!
+  getTestTwoProcessByUserId(userId: Int!): TestTwoProcess
+  getTestTwoResults: [TestTwoResult!]!
   # ======== #
 }
 
@@ -46,18 +44,18 @@ type Mutation {
   # ==== #
 
   # Test one #
-  # startTestOne(userId: Int!): TestOneProcess
-  # ansTestOne(processId: Int!, questionId: Int!, ans: Int!): TestOneProcess
-  # completeTestOne(processId: Int!): TestOneProcess
+  startTestOne(userId: Int!): TestOneProcess
+  ansTestOne(processId: Int!, questionId: Int!, ans: Int!): TestOneProcess
+  completeTestOne(processId: Int!): TestOneProcess
   # ======== #
 
   # Test two #
-  # startTestTwo(userId: Int!): TestTwoProcess
-  # ansTestTwo(processId: Int!, questionId: Int!, ans: Boolean!): TestTwoProcess
-  # completeTestTwo(processId: Int!): TestTwoProcess
+  startTestTwo(userId: Int!): TestTwoProcess
+  ansTestTwo(processId: Int!, questionId: Int!, ans: Boolean!): TestTwoProcess
+  completeTestTwo(processId: Int!): TestTwoProcess
   # ======== #
 
   # Test three #
-  # processPdf(userId: Int!, file: String!): Boolean
+  processPdf(userId: Int!, file: String!): Boolean
   # ========== #
 }
