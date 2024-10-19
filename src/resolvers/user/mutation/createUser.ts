@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { throwNewGQLError } from '../../../GraphQLError/GraphQLError.js';
 import { ServerExceptions } from '../../../GraphQLError/type.js';
 import { UserType } from '../../../models/user/type.js';
@@ -20,7 +21,11 @@ const ACCESS = [Role.Admin];
 const resolver: ResolverCallbackFn<Args, Return> = async (_, args) => {
   try {
     return await (
-      await User.createUser(args.login, args.password, args.roleId)
+      await User.createUser(
+        args.login,
+        bcrypt.hashSync(args.password, 7),
+        args.roleId
+      )
     ).getUserData();
   } catch (error) {
     throwNewGQLError(ServerExceptions.USER_IS_ALREADY_EXIST);
