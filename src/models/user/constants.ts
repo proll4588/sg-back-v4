@@ -21,3 +21,16 @@ export const USER_DEF = {
   Role: { select: ROLE_DEF },
   Student: { select: STUDENT_DEF },
 };
+
+export const EMPLOYEE_POSITION_DEF = {
+  id: true,
+  title: true,
+};
+
+export const EMPLOYEE_DEF = {
+  id: true,
+  name: true,
+  email: true,
+  EmploeePosition: { select: EMPLOYEE_POSITION_DEF },
+  User: { select: USER_DEF },
+};

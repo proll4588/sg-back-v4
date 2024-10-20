@@ -16,6 +16,9 @@ type Query {
   getUsers(roleId: Int): [User]!
   getUsersRoles: [Role]!
   getStudentUsers: [User]!
+
+  getEmployeePositions: [EmployeePosition!]!
+  getEmployees: [Employee!]!
   # ==== #
 
   # Test one #
@@ -41,6 +44,15 @@ type Mutation {
   # User #
   deleteUser(userId: Int!): Boolean!
   createUser(login: String!, password: String!, roleId: Int!): User!
+
+  createEmployeePosition(title: String!): EmployeePosition!
+  createEmployee(
+    login: String!
+    password: String!
+    positionId: Int!
+    name: String!
+    email: String!
+  ): Employee!
   # ==== #
 
   # Test one #

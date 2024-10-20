@@ -13,6 +13,7 @@ model User {
   password         String             @db.VarChar(255)
   roleId           Int
   passbookNumber   Int?               @unique(map: "User_pk")
+  Emplouee         Emplouee?
   TestOneProcesses TestOneProcesses[]
   TestThreeProcess TestThreeProcess[]
   TestTwoProcesses TestTwoProcesses[]
@@ -24,7 +25,7 @@ model User {
 
 model Role {
   id    Int    @id @default(autoincrement())
-  title String @unique(map: "Role_pk_2") @db.VarChar(50)
+  title String @unique(map: "Role_pk_2") @db.VarChar(100)
   User  User[]
 }
 
@@ -182,4 +183,24 @@ model TestThreeResultTitle {
   id              Int               @id @default(autoincrement())
   title           String            @db.VarChar(255)
   TestThreeResult TestThreeResult[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model EmploeePosition {
+  id       Int        @id @default(autoincrement())
+  title    String     @unique(map: "EmploeePosition_pk_2") @db.VarChar(255)
+  Emplouee Emplouee[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model Emplouee {
+  id              Int             @id @default(autoincrement())
+  positionId      Int
+  userId          Int             @unique(map: "Emplouee_pk_2")
+  name            String          @db.VarChar(255)
+  email           String          @db.VarChar(255)
+  EmploeePosition EmploeePosition @relation(fields: [positionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_EmploeePosition_id_fk")
+  User            User            @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_User_id_fk")
+
+  @@index([positionId], map: "Emplouee_EmploeePosition_id_fk")
 }

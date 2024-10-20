@@ -22,6 +22,10 @@ import { StartTestTwoResolverFun } from './test-two/mutation/startTestTwo.js';
 import { AnsTestTwoResolverFun } from './test-two/mutation/ansTestTwo.js';
 import { CompleteTestTwoResolverFun } from './test-two/mutation/completeTestTwo.js';
 import { ProcessPdfResolverFun } from './test-three/mutation/processPdf.js';
+import { GetEmployeePositionsResolverFun } from './user/query/getEmployeePositions.js';
+import { GetEmployeesResolverFun } from './user/query/getEmployees.js';
+import { CreateEmployeePositionResolverFun } from './user/mutation/createEmployeePosition.js';
+import { CreateEmployeeResolverFun } from './user/mutation/createEmployee.js';
 
 export type ResolverFn<Args, ReturnType> = (
   parent: unknown,
@@ -37,6 +41,9 @@ export interface Resolvers {
     getUsers: GetUsersResolverFun;
     getUsersRoles: GetUsersRolesResolverFun;
     getStudentUsers: GetStudentsUsersResolverFun;
+
+    getEmployeePositions: GetEmployeePositionsResolverFun;
+    getEmployees: GetEmployeesResolverFun;
     /* ==== */
 
     /* Test one */
@@ -57,6 +64,9 @@ export interface Resolvers {
     /* User */
     deleteUser: DeleteUserResolverFun;
     createUser: CreateUserResolverFun;
+
+    createEmployeePosition: CreateEmployeePositionResolverFun;
+    createEmployee: CreateEmployeeResolverFun;
     /* ==== */
 
     /* Auth */

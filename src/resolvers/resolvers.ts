@@ -15,8 +15,12 @@ import { getTestTwoProcessByUserIdResolver } from './test-two/query/getTestTwoPr
 import { getTestTwoQuestionsResolver } from './test-two/query/getTestTwoQuestions.js';
 import { getTestTwoResultsResolver } from './test-two/query/getTestTwoResults.js';
 import { Resolvers } from './type.js';
+import { createEmployeeResolver } from './user/mutation/createEmployee.js';
+import { createEmployeePositionResolver } from './user/mutation/createEmployeePosition.js';
 import { createUserResolver } from './user/mutation/createUser.js';
 import { deleteUserResolver } from './user/mutation/deleteUser.js';
+import { getEmployeePositionsResolver } from './user/query/getEmployeePositions.js';
+import { getEmployeesResolver } from './user/query/getEmployees.js';
 import { getStudentsUsersResolver } from './user/query/getStudentUsers.js';
 import { getUserResolver } from './user/query/getUser.js';
 import { getUsersResolver } from './user/query/getUsers.js';
@@ -29,6 +33,9 @@ export const resolvers: Resolvers = {
     getUsers: getUsersResolver,
     getUsersRoles: getUsersRolesResolver,
     getStudentUsers: getStudentsUsersResolver,
+
+    getEmployeePositions: getEmployeePositionsResolver,
+    getEmployees: getEmployeesResolver,
     /* ==== */
 
     /* Test one */
@@ -49,6 +56,9 @@ export const resolvers: Resolvers = {
     /* User */
     deleteUser: deleteUserResolver,
     createUser: createUserResolver,
+
+    createEmployeePosition: createEmployeePositionResolver,
+    createEmployee: createEmployeeResolver,
     /* ==== */
 
     /* Auth */
