@@ -12,7 +12,7 @@ type Return = UserType | null;
 
 export type GetUserResolverFun = ResolverFn<Args, Return>;
 
-const ACCESS = [Role.Admin, Role.Teacher, Role.Student];
+const ACCESS: Role[] = [];
 
 /* Fn */
 
