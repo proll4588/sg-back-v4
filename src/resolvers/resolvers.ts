@@ -1,4 +1,8 @@
 import { loginResolver } from './auth/mutation/login.js';
+import { createEmployeeTestProcessResolver } from './employee-test/mutation/createEmployeeTestProcess.js';
+import { finishEmployeeTestProcessResolver } from './employee-test/mutation/finishEmployeeTestProcess.js';
+import { getEmployeeTestProcessesResolver } from './employee-test/query/getEmployeeTestProcesses.js';
+import { getEmployeeTestVariantsResolver } from './employee-test/query/getEmployeeTestVariants.js';
 import { ansTestOneResolver } from './test-one/mutation/ansTestOne.js';
 import { completeTestOneResolver } from './test-one/mutation/completeTestOne.js';
 import { startTestOneResolver } from './test-one/mutation/startTestOne.js';
@@ -51,6 +55,11 @@ export const resolvers: Resolvers = {
     getTestTwoProcessByUserId: getTestTwoProcessByUserIdResolver,
     getTestTwoResults: getTestTwoResultsResolver,
     /* ======== */
+
+    /* Employee test */
+    getEmployeeTestVariants: getEmployeeTestVariantsResolver,
+    getEmployeeTestProcesses: getEmployeeTestProcessesResolver,
+    /* ========= */
   },
   Mutation: {
     /* User */
@@ -80,5 +89,10 @@ export const resolvers: Resolvers = {
     /* Test three */
     processPdf: processPdfResolver,
     /* ========== */
+
+    /* Employee test */
+    createEmployeeTestProcess: createEmployeeTestProcessResolver,
+    finishEmployeeTestProcess: finishEmployeeTestProcessResolver,
+    /* ========= */
   },
 };

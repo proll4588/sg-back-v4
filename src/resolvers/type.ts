@@ -26,6 +26,10 @@ import { GetEmployeePositionsResolverFun } from './user/query/getEmployeePositio
 import { GetEmployeesResolverFun } from './user/query/getEmployees.js';
 import { CreateEmployeePositionResolverFun } from './user/mutation/createEmployeePosition.js';
 import { CreateEmployeeResolverFun } from './user/mutation/createEmployee.js';
+import { GetEmployeeTestVariantsResolverFun } from './employee-test/query/getEmployeeTestVariants.js';
+import { GetEmployeeTestProcessesResolverFun } from './employee-test/query/getEmployeeTestProcesses.js';
+import { CreateEmployeeTestProcessResolverFun } from './employee-test/mutation/createEmployeeTestProcess.js';
+import { FinishEmployeeTestProcessResolverFun } from './employee-test/mutation/finishEmployeeTestProcess.js';
 
 export type ResolverFn<Args, ReturnType> = (
   parent: unknown,
@@ -59,6 +63,11 @@ export interface Resolvers {
     getTestTwoProcessByUserId: GetTestTwoProcessByUserIdResolverFun;
     getTestTwoResults: GetTestTwoResultsResolverFun;
     /* ======== */
+
+    /* Employee test */
+    getEmployeeTestVariants: GetEmployeeTestVariantsResolverFun;
+    getEmployeeTestProcesses: GetEmployeeTestProcessesResolverFun;
+    /* ========= */
   };
   Mutation: {
     /* User */
@@ -88,6 +97,11 @@ export interface Resolvers {
     /* Test three */
     processPdf: ProcessPdfResolverFun;
     /* ========== */
+
+    /* Employee test */
+    createEmployeeTestProcess: CreateEmployeeTestProcessResolverFun;
+    finishEmployeeTestProcess: FinishEmployeeTestProcessResolverFun;
+    /* ========= */
   };
 }
 

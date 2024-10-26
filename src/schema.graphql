@@ -34,6 +34,11 @@ type Query {
   getTestTwoProcessByUserId(userId: Int!): TestTwoProcess
   getTestTwoResults: [TestTwoResult!]!
   # ======== #
+
+  # Employee test #
+  getEmployeeTestVariants: [EmployeeTestVariant!]!
+  getEmployeeTestProcesses: [EmployeeTestProcess!]!
+  # ============= #
 }
 
 type Mutation {
@@ -70,4 +75,13 @@ type Mutation {
   # Test three #
   processPdf(userId: Int!, file: String!): Boolean
   # ========== #
+
+  # Employee test #
+  createEmployeeTestProcess(
+    employeeIds: [Int!]!
+    title: String!
+    testVariantId: Int!
+  ): EmployeeTestProcess
+  finishEmployeeTestProcess(processId: Int!): Boolean!
+  # ============= #
 }

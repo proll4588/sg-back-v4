@@ -8,17 +8,18 @@ datasource db {
 }
 
 model User {
-  id               Int                @id @default(autoincrement())
-  login            String             @unique(map: "User_pk_2") @db.VarChar(50)
-  password         String             @db.VarChar(255)
-  roleId           Int
-  passbookNumber   Int?               @unique(map: "User_pk")
-  Emplouee         Emplouee?
-  TestOneProcesses TestOneProcesses[]
-  TestThreeProcess TestThreeProcess[]
-  TestTwoProcesses TestTwoProcesses[]
-  Role             Role               @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "User_Role_id_fk")
-  Student          Student?           @relation(fields: [passbookNumber], references: [passbookNumber], onDelete: NoAction, onUpdate: NoAction, map: "User_Student_passbookNumber_fk")
+  id                  Int                   @id @default(autoincrement())
+  login               String                @unique(map: "User_pk_2") @db.VarChar(50)
+  password            String                @db.VarChar(255)
+  roleId              Int
+  passbookNumber      Int?                  @unique(map: "User_pk")
+  Emplouee            Emplouee?
+  EmployeeTestProcess EmployeeTestProcess[]
+  TestOneProcesses    TestOneProcesses[]
+  TestThreeProcess    TestThreeProcess[]
+  TestTwoProcesses    TestTwoProcesses[]
+  Role                Role                  @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "User_Role_id_fk")
+  Student             Student?              @relation(fields: [passbookNumber], references: [passbookNumber], onDelete: NoAction, onUpdate: NoAction, map: "User_Student_passbookNumber_fk")
 
   @@index([roleId], map: "User_Role_id_fk")
 }
@@ -194,13 +195,56 @@ model EmploeePosition {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model Emplouee {
-  id              Int             @id @default(autoincrement())
-  positionId      Int
-  userId          Int             @unique(map: "Emplouee_pk_2")
-  name            String          @db.VarChar(255)
-  email           String          @db.VarChar(255)
-  EmploeePosition EmploeePosition @relation(fields: [positionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_EmploeePosition_id_fk")
-  User            User            @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_User_id_fk")
+  id                    Int                     @id @default(autoincrement())
+  positionId            Int
+  userId                Int                     @unique(map: "Emplouee_pk_2")
+  name                  String                  @db.VarChar(255)
+  email                 String                  @db.VarChar(255)
+  EmploeePosition       EmploeePosition         @relation(fields: [positionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_EmploeePosition_id_fk")
+  User                  User                    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_User_id_fk")
+  EmplyeeProcessMembers EmplyeeProcessMembers[]
 
   @@index([positionId], map: "Emplouee_EmploeePosition_id_fk")
+}
+
+model EmployeeTestProcess {
+  id                    Int                     @id @default(autoincrement())
+  title                 String                  @db.VarChar(255)
+  startDate             DateTime                @db.DateTime(0)
+  endDate               DateTime?               @db.DateTime(0)
+  startUserId           Int
+  employeeTestVariantId Int
+  EmployeeTestVariant   EmployeeTestVariant     @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestProcess_EmployeeTestVariant_id_fk")
+  User                  User                    @relation(fields: [startUserId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestProcess_User_id_fk")
+  EmplyeeProcessMembers EmplyeeProcessMembers[]
+
+  @@index([employeeTestVariantId], map: "EmployeeTestProcess_EmployeeTestVariant_id_fk")
+  @@index([startUserId], map: "EmployeeTestProcess_User_id_fk")
+}
+
+model EmployeeTestQuestion {
+  id                    Int                 @id @default(autoincrement())
+  title                 String              @db.VarChar(255)
+  employeeTestVariantId Int
+  EmployeeTestVariant   EmployeeTestVariant @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
+
+  @@index([employeeTestVariantId], map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
+}
+
+model EmployeeTestVariant {
+  id                   Int                    @id @default(autoincrement())
+  title                String                 @db.VarChar(255)
+  EmployeeTestProcess  EmployeeTestProcess[]
+  EmployeeTestQuestion EmployeeTestQuestion[]
+}
+
+model EmplyeeProcessMembers {
+  id                    Int                 @id @default(autoincrement())
+  employeeTestProcessId Int
+  employeeId            Int
+  Emplouee              Emplouee            @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmplyeeProcessMembers_Emplouee_id_fk")
+  EmployeeTestProcess   EmployeeTestProcess @relation(fields: [employeeTestProcessId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmplyeeProcessMembers_EmployeeTestProcess_id_fk")
+
+  @@index([employeeId], map: "EmplyeeProcessMembers_Emplouee_id_fk")
+  @@index([employeeTestProcessId], map: "EmplyeeProcessMembers_EmployeeTestProcess_id_fk")
 }

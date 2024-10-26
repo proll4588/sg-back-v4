@@ -9,6 +9,5 @@ export const TYPE_DEFS_PATH = [
   resolve(__dirname, '../', 'models', 'user', 'schema.graphql'),
   resolve(__dirname, '../', 'models', 'test-one', 'schema.graphql'),
   resolve(__dirname, '../', 'models', 'test-two', 'schema.graphql'),
-  // './models/TestOne/schema.graphql',
-  // './models/TestTwo/schema.graphql',
+  resolve(__dirname, '../', 'models', 'employee-test', 'schema.graphql'),
 ];

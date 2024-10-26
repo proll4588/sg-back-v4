@@ -1,0 +1,20 @@
+type EmployeeTestVariant {
+  id: Int!
+  title: String!
+}
+
+type EmployeeTestProcessMember {
+  id: Int!
+  employeeTestProcessId: Int!
+  Emplouee: Employee!
+}
+
+type EmployeeTestProcess {
+  id: Int!
+  title: String!
+  startDate: String!
+  endDate: String
+  EmployeeTestVariant: EmployeeTestVariant!
+  EmplyeeProcessMembers: [EmployeeTestProcessMember!]!
+  User: User!
+}
