@@ -4,7 +4,7 @@ import {
   EMPLOYEE_TEST_VARIANT_DEF,
 } from './constants.js';
 
-export class EmployeeTest {
+export class EmployeeTestProcess {
   static async getEmployeeTestVariants() {
     return await prisma.employeeTestVariant.findMany({
       select: EMPLOYEE_TEST_VARIANT_DEF,
@@ -47,7 +47,7 @@ export class EmployeeTest {
       })),
     });
 
-    return EmployeeTest.getEmployeeTestProcess(employeeTestProcess.id);
+    return EmployeeTestProcess.getEmployeeTestProcess(employeeTestProcess.id);
   }
 
   id: number;
@@ -56,7 +56,7 @@ export class EmployeeTest {
   }
 
   async getData() {
-    return EmployeeTest.getEmployeeTestProcess(this.id);
+    return EmployeeTestProcess.getEmployeeTestProcess(this.id);
   }
 
   async finish() {
@@ -65,6 +65,6 @@ export class EmployeeTest {
       data: { endDate: new Date() },
     });
 
-    return EmployeeTest.getEmployeeTestProcess(this.id);
+    return EmployeeTestProcess.getEmployeeTestProcess(this.id);
   }
 }

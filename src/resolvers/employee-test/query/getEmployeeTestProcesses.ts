@@ -1,4 +1,4 @@
-import { EmployeeTest } from '../../../models/employee-test/EmployeeTest.js';
+import { EmployeeTestProcess } from '../../../models/employee-test/EmployeeTestProcess.js';
 import { EmployeeTestProcessType } from '../../../models/employee-test/type.js';
 import { checkResolver } from '../../checkResolver.js';
 import { Role } from '../../role.js';
@@ -16,7 +16,7 @@ const ACCESS = [Role.Admin, Role.Organizer];
 /* Fn */
 
 const resolver: ResolverCallbackFn<Args, Return> = async () => {
-  return await EmployeeTest.getEmployeeTestProcesses();
+  return await EmployeeTestProcess.getEmployeeTestProcesses();
 };
 
 export const getEmployeeTestProcessesResolver: GetEmployeeTestProcessesResolverFun =

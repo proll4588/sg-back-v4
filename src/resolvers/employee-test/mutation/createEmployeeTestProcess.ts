@@ -1,5 +1,5 @@
 import { isAuthContext } from '../../../context/isAuthContext.js';
-import { EmployeeTest } from '../../../models/employee-test/EmployeeTest.js';
+import { EmployeeTestProcess } from '../../../models/employee-test/EmployeeTestProcess.js';
 import { EmployeeTestProcessType } from '../../../models/employee-test/type.js';
 import { checkResolver } from '../../checkResolver.js';
 import { Role } from '../../role.js';
@@ -22,7 +22,7 @@ const ACCESS = [Role.Admin, Role.Organizer];
 
 const resolver: ResolverCallbackFn<Args, Return> = async (context, args) => {
   if (isAuthContext(context))
-    return await EmployeeTest.createEmployeeTestProcess({
+    return await EmployeeTestProcess.createEmployeeTestProcess({
       title: args.title,
       userId: context.userId,
       testVariantId: args.testVariantId,
