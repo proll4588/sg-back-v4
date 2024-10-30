@@ -17,4 +17,31 @@ type EmployeeTestProcess {
   EmployeeTestVariant: EmployeeTestVariant!
   EmplyeeProcessMembers: [EmployeeTestProcessMember!]!
   User: User!
+  EmployeeTest: [EmployeeTest!]
+}
+
+type EmployeeTest {
+  id: Int!
+  startDate: String!
+  endDate: String
+  Emplouee: Employee!
+  EmployeeTestAnswer: [EmployeeTestAnswer!]!
+  EmployeeTestVariant: EmployeeTestVariant!
+}
+
+type EmployeeTestQuestion {
+  id: Int!
+  title: String!
+  position: Int!
+}
+
+type EmployeeTestAnswer {
+  id: Int!
+  answer: String!
+  EmployeeTestQuestion: EmployeeTestQuestion!
+}
+
+input CompleteEmployeeTestAnswer {
+  questionId: Int!
+  ans: Int!
 }

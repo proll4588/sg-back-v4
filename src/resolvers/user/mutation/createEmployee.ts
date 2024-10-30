@@ -3,7 +3,7 @@ import { User } from '../../../models/user/user.js';
 import { checkResolver } from '../../checkResolver.js';
 import { Role } from '../../role.js';
 import { ResolverCallbackFn, ResolverFn } from '../../type.js';
-
+import bcrypt from 'bcrypt';
 /* DEFINE */
 
 type Args = {
@@ -24,7 +24,7 @@ const ACCESS = [Role.Admin, Role.Organizer];
 const resolver: ResolverCallbackFn<Args, Return> = async (_, args) => {
   return await User.createEmployee(
     args.login,
-    args.password,
+    bcrypt.hashSync(args.password, 7),
     args.positionId,
     args.name,
     args.email

@@ -50,6 +50,29 @@ export class EmployeeTestProcess {
     return EmployeeTestProcess.getEmployeeTestProcess(employeeTestProcess.id);
   }
 
+  static async getAvailableEmployeeTestProcesses(userId: number) {
+    const employee = await prisma.emplouee.findUnique({
+      where: { userId },
+      select: { id: true },
+    });
+
+    if (!employee) return [];
+
+    return await prisma.employeeTestProcess.findMany({
+      where: {
+        EmplyeeProcessMembers: { some: { employeeId: employee.id } },
+        endDate: null,
+      },
+      select: {
+        ...EMPLOYEE_TEST_PROCESS_DEF,
+        EmployeeTest: {
+          select: EMPLOYEE_TEST_PROCESS_DEF.EmployeeTest.select,
+          where: { employeeId: employee.id },
+        },
+      },
+    });
+  }
+
   id: number;
   constructor(id: number) {
     this.id = id;

@@ -30,6 +30,14 @@ import { GetEmployeeTestVariantsResolverFun } from './employee-test/query/getEmp
 import { GetEmployeeTestProcessesResolverFun } from './employee-test/query/getEmployeeTestProcesses.js';
 import { CreateEmployeeTestProcessResolverFun } from './employee-test/mutation/createEmployeeTestProcess.js';
 import { FinishEmployeeTestProcessResolverFun } from './employee-test/mutation/finishEmployeeTestProcess.js';
+import { GetAvailableEmployeeTestProcessesResolverFun } from './employee-test/query/getAvailableEmployeeTestProcesses.js';
+import { GetEmployeeTestQuestionsResolverFun } from './employee-test/query/getEmployeeTestQuestions.js';
+import { AnswerEmployeeTestResolverFun } from './employee-test/mutation/answerEmployeeTest.js';
+import { FinishEmployeeTestResolverFun } from './employee-test/mutation/finishEmployeeTest.js';
+import { StartEmployeeTestResolverFun } from './employee-test/mutation/startEmployeeTest.js';
+import { GetEmployeeTestProcessByIdResolverFun } from './employee-test/query/getEmployeeTestProcessById.js';
+import { GetEmployeeTestByProcessIdResolverFun } from './employee-test/query/getEmployeeTestByProcessId.js';
+import { GetEmployeeTestByIdResolverFun } from './employee-test/query/getEmployeeTestById.js';
 
 export type ResolverFn<Args, ReturnType> = (
   parent: unknown,
@@ -67,6 +75,11 @@ export interface Resolvers {
     /* Employee test */
     getEmployeeTestVariants: GetEmployeeTestVariantsResolverFun;
     getEmployeeTestProcesses: GetEmployeeTestProcessesResolverFun;
+    getEmployeeTestProcessById: GetEmployeeTestProcessByIdResolverFun;
+    getAvailableEmployeeTestProcesses: GetAvailableEmployeeTestProcessesResolverFun;
+    getEmployeeTestQuestions: GetEmployeeTestQuestionsResolverFun;
+    getEmployeeTestByProcessId: GetEmployeeTestByProcessIdResolverFun;
+    getEmployeeTestById: GetEmployeeTestByIdResolverFun;
     /* ========= */
   };
   Mutation: {
@@ -101,6 +114,9 @@ export interface Resolvers {
     /* Employee test */
     createEmployeeTestProcess: CreateEmployeeTestProcessResolverFun;
     finishEmployeeTestProcess: FinishEmployeeTestProcessResolverFun;
+    answerEmployeeTest: AnswerEmployeeTestResolverFun;
+    finishEmployeeTest: FinishEmployeeTestResolverFun;
+    startEmployeeTest: StartEmployeeTestResolverFun;
     /* ========= */
   };
 }

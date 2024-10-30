@@ -202,6 +202,7 @@ model Emplouee {
   email                 String                  @db.VarChar(255)
   EmploeePosition       EmploeePosition         @relation(fields: [positionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_EmploeePosition_id_fk")
   User                  User                    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_User_id_fk")
+  EmployeeTest          EmployeeTest[]
   EmplyeeProcessMembers EmplyeeProcessMembers[]
 
   @@index([positionId], map: "Emplouee_EmploeePosition_id_fk")
@@ -214,6 +215,7 @@ model EmployeeTestProcess {
   endDate               DateTime?               @db.DateTime(0)
   startUserId           Int
   employeeTestVariantId Int
+  EmployeeTest          EmployeeTest[]
   EmployeeTestVariant   EmployeeTestVariant     @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestProcess_EmployeeTestVariant_id_fk")
   User                  User                    @relation(fields: [startUserId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestProcess_User_id_fk")
   EmplyeeProcessMembers EmplyeeProcessMembers[]
@@ -223,10 +225,12 @@ model EmployeeTestProcess {
 }
 
 model EmployeeTestQuestion {
-  id                    Int                 @id @default(autoincrement())
-  title                 String              @db.VarChar(255)
+  id                    Int                  @id @default(autoincrement())
+  position              Int
+  title                 String               @db.VarChar(255)
   employeeTestVariantId Int
-  EmployeeTestVariant   EmployeeTestVariant @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
+  EmployeeTestAnswer    EmployeeTestAnswer[]
+  EmployeeTestVariant   EmployeeTestVariant  @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
 
   @@index([employeeTestVariantId], map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
 }
@@ -234,6 +238,7 @@ model EmployeeTestQuestion {
 model EmployeeTestVariant {
   id                   Int                    @id @default(autoincrement())
   title                String                 @db.VarChar(255)
+  EmployeeTest         EmployeeTest[]
   EmployeeTestProcess  EmployeeTestProcess[]
   EmployeeTestQuestion EmployeeTestQuestion[]
 }
@@ -247,4 +252,33 @@ model EmplyeeProcessMembers {
 
   @@index([employeeId], map: "EmplyeeProcessMembers_Emplouee_id_fk")
   @@index([employeeTestProcessId], map: "EmplyeeProcessMembers_EmployeeTestProcess_id_fk")
+}
+
+model EmployeeTest {
+  id                    Int                  @id @default(autoincrement())
+  employeeId            Int
+  employeeTestProcessId Int
+  startDate             DateTime             @db.DateTime(0)
+  endDate               DateTime?            @db.DateTime(0)
+  employeeTestVariantId Int
+  Emplouee              Emplouee             @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTest_Emplouee_id_fk")
+  EmployeeTestProcess   EmployeeTestProcess  @relation(fields: [employeeTestProcessId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTest_EmployeeTestProcess_id_fk")
+  EmployeeTestVariant   EmployeeTestVariant  @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTest_EmployeeTestVariant_id_fk")
+  EmployeeTestAnswer    EmployeeTestAnswer[]
+
+  @@index([employeeId], map: "EmployeeTest_Emplouee_id_fk")
+  @@index([employeeTestProcessId], map: "EmployeeTest_EmployeeTestProcess_id_fk")
+  @@index([employeeTestVariantId], map: "EmployeeTest_EmployeeTestVariant_id_fk")
+}
+
+model EmployeeTestAnswer {
+  id                   Int                  @id @default(autoincrement())
+  employeeTestId       Int
+  questionId           Int
+  answer               Int
+  EmployeeTestQuestion EmployeeTestQuestion @relation(fields: [questionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestAnswer_EmployeeTestQuestion_id_fk")
+  EmployeeTest         EmployeeTest         @relation(fields: [employeeTestId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestAnswer_EmployeeTest_id_fk")
+
+  @@index([questionId], map: "EmployeeTestAnswer_EmployeeTestQuestion_id_fk")
+  @@index([employeeTestId], map: "EmployeeTestAnswer_EmployeeTest_id_fk")
 }

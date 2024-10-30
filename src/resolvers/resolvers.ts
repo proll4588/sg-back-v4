@@ -1,7 +1,15 @@
 import { loginResolver } from './auth/mutation/login.js';
+import { answerEmployeeTestResolver } from './employee-test/mutation/answerEmployeeTest.js';
 import { createEmployeeTestProcessResolver } from './employee-test/mutation/createEmployeeTestProcess.js';
+import { finishEmployeeTestResolver } from './employee-test/mutation/finishEmployeeTest.js';
 import { finishEmployeeTestProcessResolver } from './employee-test/mutation/finishEmployeeTestProcess.js';
+import { startEmployeeTestResolver } from './employee-test/mutation/startEmployeeTest.js';
+import { getAvailableEmployeeTestProcessesResolver } from './employee-test/query/getAvailableEmployeeTestProcesses.js';
+import { getEmployeeTestByIdResolver } from './employee-test/query/getEmployeeTestById.js';
+import { getEmployeeTestByProcessIdResolver } from './employee-test/query/getEmployeeTestByProcessId.js';
+import { getEmployeeTestProcessByIdResolver } from './employee-test/query/getEmployeeTestProcessById.js';
 import { getEmployeeTestProcessesResolver } from './employee-test/query/getEmployeeTestProcesses.js';
+import { getEmployeeTestQuestionsResolver } from './employee-test/query/getEmployeeTestQuestions.js';
 import { getEmployeeTestVariantsResolver } from './employee-test/query/getEmployeeTestVariants.js';
 import { ansTestOneResolver } from './test-one/mutation/ansTestOne.js';
 import { completeTestOneResolver } from './test-one/mutation/completeTestOne.js';
@@ -59,6 +67,12 @@ export const resolvers: Resolvers = {
     /* Employee test */
     getEmployeeTestVariants: getEmployeeTestVariantsResolver,
     getEmployeeTestProcesses: getEmployeeTestProcessesResolver,
+    getAvailableEmployeeTestProcesses:
+      getAvailableEmployeeTestProcessesResolver,
+    getEmployeeTestQuestions: getEmployeeTestQuestionsResolver,
+    getEmployeeTestProcessById: getEmployeeTestProcessByIdResolver,
+    getEmployeeTestByProcessId: getEmployeeTestByProcessIdResolver,
+    getEmployeeTestById: getEmployeeTestByIdResolver,
     /* ========= */
   },
   Mutation: {
@@ -93,6 +107,9 @@ export const resolvers: Resolvers = {
     /* Employee test */
     createEmployeeTestProcess: createEmployeeTestProcessResolver,
     finishEmployeeTestProcess: finishEmployeeTestProcessResolver,
+    answerEmployeeTest: answerEmployeeTestResolver,
+    finishEmployeeTest: finishEmployeeTestResolver,
+    startEmployeeTest: startEmployeeTestResolver,
     /* ========= */
   },
 };

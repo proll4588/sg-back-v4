@@ -36,8 +36,19 @@ type Query {
   # ======== #
 
   # Employee test #
+
+  # Process
   getEmployeeTestVariants: [EmployeeTestVariant!]!
   getEmployeeTestProcesses: [EmployeeTestProcess!]!
+  getEmployeeTestProcessById(processId: Int!): EmployeeTestProcess
+  getAvailableEmployeeTestProcesses: [EmployeeTestProcess!]!
+
+  # Depricated
+  getEmployeeTestByProcessId(processId: Int!): EmployeeTest
+  getEmployeeTestById(testId: Int!): EmployeeTest
+
+  # Test
+  getEmployeeTestQuestions(testId: Int!): [EmployeeTestQuestion!]!
   # ============= #
 }
 
@@ -77,11 +88,27 @@ type Mutation {
   # ========== #
 
   # Employee test #
+
+  # Process
   createEmployeeTestProcess(
     employeeIds: [Int!]!
     title: String!
     testVariantId: Int!
   ): EmployeeTestProcess
   finishEmployeeTestProcess(processId: Int!): Boolean!
+
+  # Test
+  startEmployeeTest(testProcessId: Int!): EmployeeTest
+  answerEmployeeTest(
+    testId: Int!
+    answers: [CompleteEmployeeTestAnswer!]!
+  ): Boolean!
+
+  # Depricated
+  finishEmployeeTest(testId: Int!): Boolean!
+
+  # Depricated
+  # answerEmployeeTest(testId: Int!, questionId: Int!, ans: Int!): Boolean!
+
   # ============= #
 }
