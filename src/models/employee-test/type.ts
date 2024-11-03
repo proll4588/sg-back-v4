@@ -32,6 +32,7 @@ export type EmployeeTestQuestionType = {
   id: number;
   title: string;
   position: number;
+  EmployeeTestBlok: SimpleEmployeeTestBlockType;
 };
 
 export type EmployeeTestType = {
@@ -47,3 +48,14 @@ export interface CompleteEmployeeTestAnswer {
   questionId: number;
   ans: number;
 }
+
+export interface SimpleEmployeeTestBlockType {
+  id: number;
+  title: string;
+  employeeTestVariantId: number;
+}
+
+export type EmployeeTestProcessResultType = {
+  title: string;
+  value: number;
+};

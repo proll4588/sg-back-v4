@@ -38,6 +38,7 @@ import { StartEmployeeTestResolverFun } from './employee-test/mutation/startEmpl
 import { GetEmployeeTestProcessByIdResolverFun } from './employee-test/query/getEmployeeTestProcessById.js';
 import { GetEmployeeTestByProcessIdResolverFun } from './employee-test/query/getEmployeeTestByProcessId.js';
 import { GetEmployeeTestByIdResolverFun } from './employee-test/query/getEmployeeTestById.js';
+import { GetEmployeeTestProcessResultsResolverFun } from './employee-test/query/getEmployeeTestProcessResults.js';
 
 export type ResolverFn<Args, ReturnType> = (
   parent: unknown,
@@ -80,6 +81,7 @@ export interface Resolvers {
     getEmployeeTestQuestions: GetEmployeeTestQuestionsResolverFun;
     getEmployeeTestByProcessId: GetEmployeeTestByProcessIdResolverFun;
     getEmployeeTestById: GetEmployeeTestByIdResolverFun;
+    getEmployeeTestProcessResults: GetEmployeeTestProcessResultsResolverFun;
     /* ========= */
   };
   Mutation: {

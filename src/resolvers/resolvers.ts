@@ -9,6 +9,7 @@ import { getEmployeeTestByIdResolver } from './employee-test/query/getEmployeeTe
 import { getEmployeeTestByProcessIdResolver } from './employee-test/query/getEmployeeTestByProcessId.js';
 import { getEmployeeTestProcessByIdResolver } from './employee-test/query/getEmployeeTestProcessById.js';
 import { getEmployeeTestProcessesResolver } from './employee-test/query/getEmployeeTestProcesses.js';
+import { getEmployeeTestProcessResultsResolver } from './employee-test/query/getEmployeeTestProcessResults.js';
 import { getEmployeeTestQuestionsResolver } from './employee-test/query/getEmployeeTestQuestions.js';
 import { getEmployeeTestVariantsResolver } from './employee-test/query/getEmployeeTestVariants.js';
 import { ansTestOneResolver } from './test-one/mutation/ansTestOne.js';
@@ -73,6 +74,7 @@ export const resolvers: Resolvers = {
     getEmployeeTestProcessById: getEmployeeTestProcessByIdResolver,
     getEmployeeTestByProcessId: getEmployeeTestByProcessIdResolver,
     getEmployeeTestById: getEmployeeTestByIdResolver,
+    getEmployeeTestProcessResults: getEmployeeTestProcessResultsResolver,
     /* ========= */
   },
   Mutation: {

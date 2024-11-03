@@ -227,18 +227,22 @@ model EmployeeTestProcess {
 model EmployeeTestQuestion {
   id                    Int                  @id @default(autoincrement())
   position              Int
-  title                 String               @db.VarChar(255)
+  title                 String               @db.VarChar(1023)
   employeeTestVariantId Int
+  employeeTestBlockId   Int
   EmployeeTestAnswer    EmployeeTestAnswer[]
+  EmployeeTestBlok      EmployeeTestBlok     @relation(fields: [employeeTestBlockId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestQuestion_EmployeeTestBlok_id_fk")
   EmployeeTestVariant   EmployeeTestVariant  @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
 
   @@index([employeeTestVariantId], map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
+  @@index([employeeTestBlockId], map: "EmployeeTestQuestion_EmployeeTestBlok_id_fk")
 }
 
 model EmployeeTestVariant {
   id                   Int                    @id @default(autoincrement())
   title                String                 @db.VarChar(255)
   EmployeeTest         EmployeeTest[]
+  EmployeeTestBlok     EmployeeTestBlok[]
   EmployeeTestProcess  EmployeeTestProcess[]
   EmployeeTestQuestion EmployeeTestQuestion[]
 }
@@ -281,4 +285,14 @@ model EmployeeTestAnswer {
 
   @@index([questionId], map: "EmployeeTestAnswer_EmployeeTestQuestion_id_fk")
   @@index([employeeTestId], map: "EmployeeTestAnswer_EmployeeTest_id_fk")
+}
+
+model EmployeeTestBlok {
+  id                    Int                    @id @default(autoincrement())
+  employeeTestVariantId Int
+  title                 String                 @db.VarChar(255)
+  EmployeeTestVariant   EmployeeTestVariant    @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestBlok_EmployeeTestVariant_id_fk")
+  EmployeeTestQuestion  EmployeeTestQuestion[]
+
+  @@index([employeeTestVariantId], map: "EmployeeTestBlok_EmployeeTestVariant_id_fk")
 }

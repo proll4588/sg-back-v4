@@ -42,6 +42,7 @@ type Query {
   getEmployeeTestProcesses: [EmployeeTestProcess!]!
   getEmployeeTestProcessById(processId: Int!): EmployeeTestProcess
   getAvailableEmployeeTestProcesses: [EmployeeTestProcess!]!
+  getEmployeeTestProcessResults(processId: Int!): [EmployeeTestProcessResult!]!
 
   # Depricated
   getEmployeeTestByProcessId(processId: Int!): EmployeeTest

@@ -5,10 +5,17 @@ export const EMPLOYEE_TEST_VARIANT_DEF = {
   title: true,
 };
 
+export const SIMPLE_EMPLOYEE_TEST_BLOCK_DEF = {
+  id: true,
+  title: true,
+  employeeTestVariantId: true,
+};
+
 export const EMPLOYEE_TEST_QUESTION_DEF = {
   id: true,
   title: true,
   position: true,
+  EmployeeTestBlok: { select: SIMPLE_EMPLOYEE_TEST_BLOCK_DEF },
 };
 
 export const EMPLOYEE_TEST_PROCESS_MEMBER_DEF = {

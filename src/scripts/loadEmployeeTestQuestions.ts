@@ -9,15 +9,17 @@ const main = async () => {
     .pipe(csv({ separator: ';' }))
     .on('data', (data) =>
       results.push({
-        title: data.question,
-        employeeTestVariantId: Number(data.variantId),
+        employeeTestVariantId: Number(data.employeeTestVariantId) as number,
+        employeeTestBlockId: Number(data.employeeTestBlockId) as number,
+        title: data.title as string,
+        position: Number(data.position) as number,
       })
     )
     .on('end', () => {
+      console.log(results);
+
       prisma.employeeTestQuestion
-        .createMany({
-          data: results,
-        })
+        .createMany({ data: results })
         .then(() => console.log('done'));
     });
 };

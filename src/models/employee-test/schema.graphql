@@ -33,6 +33,7 @@ type EmployeeTestQuestion {
   id: Int!
   title: String!
   position: Int!
+  EmployeeTestBlok: SimpleEmployeeTestBlock!
 }
 
 type EmployeeTestAnswer {
@@ -44,4 +45,15 @@ type EmployeeTestAnswer {
 input CompleteEmployeeTestAnswer {
   questionId: Int!
   ans: Int!
+}
+
+type SimpleEmployeeTestBlock {
+  id: Int!
+  title: String!
+  employeeTestVariantId: Int!
+}
+
+type EmployeeTestProcessResult {
+  title: String!
+  value: Float!
 }
