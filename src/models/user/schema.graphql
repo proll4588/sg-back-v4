@@ -1,4 +1,5 @@
-type Group {
+# Student #
+type StudentGroup {
   id: Int!
   title: String!
 }
@@ -6,10 +7,12 @@ type Group {
 type Student {
   passbookNumber: Int!
   name: String!
-  Group: Group!
+  Group: StudentGroup!
 }
+# ======= #
 
-type Role {
+# User #
+type UserRole {
   id: Int!
   title: String!
 }
@@ -17,10 +20,11 @@ type Role {
 type User {
   id: Int!
   login: String!
-  Role: Role!
-  Student: Student
+  Role: UserRole!
 }
+# ==== #
 
+# Employee #
 type EmployeePosition {
   id: Int!
   title: String!
@@ -28,8 +32,9 @@ type EmployeePosition {
 
 type Employee {
   id: Int!
-  EmploeePosition: EmployeePosition!
-  User: User!
   name: String!
   email: String!
+  User: User!
+  EmployeePosition: EmployeePosition!
 }
+# ==== #

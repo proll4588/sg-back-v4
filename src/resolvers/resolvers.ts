@@ -12,29 +12,31 @@ import { getEmployeeTestProcessesResolver } from './employee-test/query/getEmplo
 import { getEmployeeTestProcessResultsResolver } from './employee-test/query/getEmployeeTestProcessResults.js';
 import { getEmployeeTestQuestionsResolver } from './employee-test/query/getEmployeeTestQuestions.js';
 import { getEmployeeTestVariantsResolver } from './employee-test/query/getEmployeeTestVariants.js';
-import { ansTestOneResolver } from './test-one/mutation/ansTestOne.js';
-import { completeTestOneResolver } from './test-one/mutation/completeTestOne.js';
-import { startTestOneResolver } from './test-one/mutation/startTestOne.js';
-import { getAllTestOneProcessResolver } from './test-one/query/getAllTestOneProcess.js';
-import { getTestOneProcessByUserIdResolver } from './test-one/query/getTestOneProcessByUserId.js';
-import { getTestOneQuestionsResolver } from './test-one/query/getTestOneQuestions.js';
-import { getTestOneResultsResolver } from './test-one/query/getTestOneResults.js';
-import { processPdfResolver } from './test-three/mutation/processPdf.js';
-import { ansTestTwoResolver } from './test-two/mutation/ansTestTwo.js';
-import { completeTestTwoResolver } from './test-two/mutation/completeTestTwo.js';
-import { startTestTwoResolver } from './test-two/mutation/startTestTwo.js';
-import { getAllTestTwoProcessResolver } from './test-two/query/getAllTestTwoProcess.js';
-import { getTestTwoProcessByUserIdResolver } from './test-two/query/getTestTwoProcessByUserId.js';
-import { getTestTwoQuestionsResolver } from './test-two/query/getTestTwoQuestions.js';
-import { getTestTwoResultsResolver } from './test-two/query/getTestTwoResults.js';
+import { answerStudentTestOneResolver } from './student-test/mutation/answerStudentTestOne.js';
+import { answerStudentTestThreeResolver } from './student-test/mutation/answerStudentTestThree.js';
+import { answerStudentTestTwoResolver } from './student-test/mutation/answerStudentTestTwo.js';
+import { finishStudentTestProcessResolver } from './student-test/mutation/finishStudentTestProcess.js';
+import { startStudentTestResolver } from './student-test/mutation/startStudentTest.js';
+import { startStudentTestProcessResolver } from './student-test/mutation/startStudentTestProcess.js';
+import { getAvailableStudentTestProcessesResolver } from './student-test/query/getAvailableStudentTestProcesses.js';
+import { getStudentTestByIdResolver } from './student-test/query/getStudentTestById.js';
+import { getStudentTestProcessesResolver } from './student-test/query/getStudentTestProcesses.js';
+import { getStudentTestProcessMembersResolver } from './student-test/query/getStudentTestProcessMembers.js';
+import { getStudentTestQuestionsResolver } from './student-test/query/getStudentTestQuestions.js';
+import { getStudentTestVariantsResolver } from './student-test/query/getStudentTestVariants.js';
 import { Resolvers } from './type.js';
 import { createEmployeeResolver } from './user/mutation/createEmployee.js';
 import { createEmployeePositionResolver } from './user/mutation/createEmployeePosition.js';
+import { createStudentResolver } from './user/mutation/createStudent.js';
+import { createStudentGroupResolver } from './user/mutation/createStudentGroup.js';
 import { createUserResolver } from './user/mutation/createUser.js';
+import { deleteEmployeeResolver } from './user/mutation/deleteEmployee.js';
+import { deleteStudentResolver } from './user/mutation/deleteStudent.js';
 import { deleteUserResolver } from './user/mutation/deleteUser.js';
 import { getEmployeePositionsResolver } from './user/query/getEmployeePositions.js';
 import { getEmployeesResolver } from './user/query/getEmployees.js';
-import { getStudentsUsersResolver } from './user/query/getStudentUsers.js';
+import { getStudentGroupsResolver } from './user/query/getStudentGroups.js';
+import { getStudentsResolver } from './user/query/getStudents.js';
 import { getUserResolver } from './user/query/getUser.js';
 import { getUsersResolver } from './user/query/getUsers.js';
 import { getUsersRolesResolver } from './user/query/getUsersRoles.js';
@@ -45,25 +47,26 @@ export const resolvers: Resolvers = {
     getUser: getUserResolver,
     getUsers: getUsersResolver,
     getUsersRoles: getUsersRolesResolver,
-    getStudentUsers: getStudentsUsersResolver,
-
-    getEmployeePositions: getEmployeePositionsResolver,
-    getEmployees: getEmployeesResolver,
     /* ==== */
 
-    /* Test one */
-    getAllTestOneProcess: getAllTestOneProcessResolver,
-    getTestOneProcessByUserId: getTestOneProcessByUserIdResolver,
-    getTestOneQuestions: getTestOneQuestionsResolver,
-    getTestOneResults: getTestOneResultsResolver,
+    /* Student */
+    getStudentGroups: getStudentGroupsResolver,
+    getStudents: getStudentsResolver,
+    /* ======= */
+
+    /* Employee */
+    getEmployeePositions: getEmployeePositionsResolver,
+    getEmployees: getEmployeesResolver,
     /* ======== */
 
-    /* Test two */
-    getAllTestTwoProcess: getAllTestTwoProcessResolver,
-    getTestTwoQuestions: getTestTwoQuestionsResolver,
-    getTestTwoProcessByUserId: getTestTwoProcessByUserIdResolver,
-    getTestTwoResults: getTestTwoResultsResolver,
-    /* ======== */
+    /* Student test */
+    getStudentTestVariants: getStudentTestVariantsResolver,
+    getStudentTestProcesses: getStudentTestProcessesResolver,
+    getStudentTestProcessMembers: getStudentTestProcessMembersResolver,
+    getAvailableStudentTestProcesses: getAvailableStudentTestProcessesResolver,
+    getStudentTestQuestions: getStudentTestQuestionsResolver,
+    getStudentTestById: getStudentTestByIdResolver,
+    /* ========= */
 
     /* Employee test */
     getEmployeeTestVariants: getEmployeeTestVariantsResolver,
@@ -78,33 +81,35 @@ export const resolvers: Resolvers = {
     /* ========= */
   },
   Mutation: {
-    /* User */
-    deleteUser: deleteUserResolver,
-    createUser: createUserResolver,
-
-    createEmployeePosition: createEmployeePositionResolver,
-    createEmployee: createEmployeeResolver,
-    /* ==== */
-
     /* Auth */
     login: loginResolver,
     /* ==== */
 
-    /* Test one */
-    startTestOne: startTestOneResolver,
-    ansTestOne: ansTestOneResolver,
-    completeTestOne: completeTestOneResolver,
-    /* ======== */
+    /* User */
+    deleteUser: deleteUserResolver,
+    createUser: createUserResolver,
+    /* ==== */
 
-    /* Test two */
-    startTestTwo: startTestTwoResolver,
-    ansTestTwo: ansTestTwoResolver,
-    completeTestTwo: completeTestTwoResolver,
-    /* ======== */
+    /* Employee */
+    createEmployeePosition: createEmployeePositionResolver,
+    createEmployee: createEmployeeResolver,
+    deleteEmployee: deleteEmployeeResolver,
+    /* ==== */
 
-    /* Test three */
-    processPdf: processPdfResolver,
-    /* ========== */
+    /* Student */
+    createStudentGroup: createStudentGroupResolver,
+    createStudent: createStudentResolver,
+    deleteStudent: deleteStudentResolver,
+    /* ==== */
+
+    /* Student test */
+    startStudentTestProcess: startStudentTestProcessResolver,
+    finishStudentTestProcess: finishStudentTestProcessResolver,
+    startStudentTest: startStudentTestResolver,
+    answerStudentTestOne: answerStudentTestOneResolver,
+    answerStudentTestTwo: answerStudentTestTwoResolver,
+    answerStudentTestThree: answerStudentTestThreeResolver,
+    /* ========= */
 
     /* Employee test */
     createEmployeeTestProcess: createEmployeeTestProcessResolver,

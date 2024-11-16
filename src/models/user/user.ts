@@ -1,6 +1,5 @@
 import { prisma } from '../../controllers/prisma.controller.js';
-import { Role } from '../../resolvers/role.js';
-import { EMPLOYEE_DEF, EMPLOYEE_POSITION_DEF, USER_DEF } from './constants.js';
+import { USER_DEF } from './constants.js';
 
 export class User {
   /* Статические методы */
@@ -37,7 +36,7 @@ export class User {
   }
 
   static async getUsersRoles() {
-    return await prisma.role.findMany();
+    return await prisma.role.findMany({ where: { isCommon: true } });
   }
 
   static async getUserByLogin(login: string) {
@@ -55,40 +54,6 @@ export class User {
     return await prisma.user.findMany({
       where: { Student: { isNot: null }, roleId: 2 },
       select: USER_DEF,
-    });
-  }
-
-  static async getEmployeePositions() {
-    return await prisma.emploeePosition.findMany({
-      select: EMPLOYEE_POSITION_DEF,
-    });
-  }
-
-  static async getEmployees() {
-    return await prisma.emplouee.findMany({
-      select: EMPLOYEE_DEF,
-    });
-  }
-
-  static async createEmployeePosition(title: string) {
-    return await prisma.emploeePosition.create({
-      data: { title },
-      select: EMPLOYEE_POSITION_DEF,
-    });
-  }
-
-  static async createEmployee(
-    login: string,
-    password: string,
-    positionId: number,
-    name: string,
-    email: string
-  ) {
-    const newUser = await User.createUser(login, password, Role.Employee);
-
-    return await prisma.emplouee.create({
-      data: { email, name, positionId, userId: newUser.userId },
-      select: EMPLOYEE_DEF,
     });
   }
 

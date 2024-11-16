@@ -6,7 +6,7 @@ type EmployeeTestVariant {
 type EmployeeTestProcessMember {
   id: Int!
   employeeTestProcessId: Int!
-  Emplouee: Employee!
+  Employee: Employee!
 }
 
 type EmployeeTestProcess {
@@ -15,7 +15,7 @@ type EmployeeTestProcess {
   startDate: String!
   endDate: String
   EmployeeTestVariant: EmployeeTestVariant!
-  EmplyeeProcessMembers: [EmployeeTestProcessMember!]!
+  EmployeeProcessMembers: [EmployeeTestProcessMember!]!
   User: User!
   EmployeeTest: [EmployeeTest!]
 }
@@ -24,7 +24,7 @@ type EmployeeTest {
   id: Int!
   startDate: String!
   endDate: String
-  Emplouee: Employee!
+  Employee: Employee!
   EmployeeTestAnswer: [EmployeeTestAnswer!]!
   EmployeeTestVariant: EmployeeTestVariant!
 }
@@ -33,7 +33,7 @@ type EmployeeTestQuestion {
   id: Int!
   title: String!
   position: Int!
-  EmployeeTestBlok: SimpleEmployeeTestBlock!
+  EmployeeTestBlock: SimpleEmployeeTestBlock!
 }
 
 type EmployeeTestAnswer {

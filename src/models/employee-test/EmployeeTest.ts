@@ -23,7 +23,7 @@ export class EmployeeTest {
     );
     if (!testProcess) return null;
 
-    const employee = await prisma.emplouee.findUnique({
+    const employee = await prisma.employee.findUnique({
       where: { userId },
     });
     if (!employee) return null;
@@ -40,7 +40,7 @@ export class EmployeeTest {
   }
 
   static async getEmployeeTestByProcessId(processId: number, userId: number) {
-    const employee = await prisma.emplouee.findUnique({ where: { userId } });
+    const employee = await prisma.employee.findUnique({ where: { userId } });
     if (!employee) return null;
 
     return await prisma.employeeTest.findMany({

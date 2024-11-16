@@ -4,7 +4,6 @@ export interface UserType {
   login: string;
   password: string;
   Role: RoleType;
-  Student: StudentType | null;
 }
 
 export interface RoleType {
@@ -12,14 +11,20 @@ export interface RoleType {
   title: string;
 }
 
+// Студенты
+
 export interface StudentType {
   passbookNumber: number;
   name: string;
-  Group: {
-    id: number;
-    title: string;
-  };
+  Group: StudentGroupType;
 }
+
+export interface StudentGroupType {
+  id: number;
+  title: string;
+}
+
+// Сотрудники
 
 export interface EmployeePositionType {
   id: number;
@@ -29,7 +34,7 @@ export interface EmployeePositionType {
 export interface EmployeeType {
   id: number;
   User: UserType;
-  EmploeePosition: EmployeePositionType;
+  EmployeePosition: EmployeePositionType;
   name: string;
   email: string;
 }

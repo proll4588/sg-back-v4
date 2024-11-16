@@ -1,0 +1,32 @@
+type StudentTestVariant {
+  id: Int!
+  title: String!
+}
+
+type StudentTestProcessListItem {
+  id: Int!
+  title: String!
+  dateStart: String!
+  dateEnd: String
+  StudentTestVariant: StudentTestVariant!
+}
+
+type StudentTestProcessMembers {
+  passbookNumber: Int!
+  name: String!
+  Group: StudentGroup!
+  StudentTest: [_StudentTest]!
+}
+
+type StudentTestProcessListItemWithStudentTest {
+  id: Int!
+  title: String!
+  StudentTestVariant: StudentTestVariant!
+  StudentTest: [_StudentTest]!
+}
+
+type _StudentTest {
+  id: Int!
+  dateStart: String!
+  dateEnd: String
+}

@@ -40,7 +40,7 @@ export class EmployeeTestProcess {
       },
     });
 
-    await prisma.emplyeeProcessMembers.createMany({
+    await prisma.employeeProcessMembers.createMany({
       data: employeeIds.map((employeeId) => ({
         employeeId,
         employeeTestProcessId: employeeTestProcess.id,
@@ -51,7 +51,7 @@ export class EmployeeTestProcess {
   }
 
   static async getAvailableEmployeeTestProcesses(userId: number) {
-    const employee = await prisma.emplouee.findUnique({
+    const employee = await prisma.employee.findUnique({
       where: { userId },
       select: { id: true },
     });
@@ -60,7 +60,7 @@ export class EmployeeTestProcess {
 
     return await prisma.employeeTestProcess.findMany({
       where: {
-        EmplyeeProcessMembers: { some: { employeeId: employee.id } },
+        EmployeeProcessMembers: { some: { employeeId: employee.id } },
         endDate: null,
       },
       select: {
@@ -102,7 +102,7 @@ export class EmployeeTestProcess {
         answer: true,
         EmployeeTestQuestion: {
           select: {
-            EmployeeTestBlok: {
+            EmployeeTestBlock: {
               select: {
                 title: true,
               },
@@ -114,7 +114,7 @@ export class EmployeeTestProcess {
 
     const parsed = processes.map((process) => ({
       answer: process.answer,
-      title: process.EmployeeTestQuestion.EmployeeTestBlok.title,
+      title: process.EmployeeTestQuestion.EmployeeTestBlock.title,
     }));
 
     const calc = parsed.reduce<Record<string, number>>((acc, curr) => {

@@ -8,7 +8,7 @@ export type EmployeeTestVariantType = {
 export type EmployeeTestProcessMemberType = {
   id: number;
   employeeTestProcessId: number;
-  Emplouee: EmployeeType;
+  Employee: EmployeeType;
 };
 
 export type EmployeeTestProcessType = {
@@ -17,7 +17,7 @@ export type EmployeeTestProcessType = {
   startDate: Date;
   endDate: Date | null;
   EmployeeTestVariant: EmployeeTestVariantType;
-  EmplyeeProcessMembers: EmployeeTestProcessMemberType[];
+  EmployeeProcessMembers: EmployeeTestProcessMemberType[];
   User: UserType;
   EmployeeTest: EmployeeTestType[];
 };
@@ -32,14 +32,14 @@ export type EmployeeTestQuestionType = {
   id: number;
   title: string;
   position: number;
-  EmployeeTestBlok: SimpleEmployeeTestBlockType;
+  EmployeeTestBlock: SimpleEmployeeTestBlockType;
 };
 
 export type EmployeeTestType = {
   id: number;
   startDate: Date;
   endDate: Date | null;
-  Emplouee: EmployeeType;
+  Employee: EmployeeType;
   EmployeeTestAnswer: EmployeeTestAnswerType[];
   EmployeeTestVariant: EmployeeTestVariantType;
 };

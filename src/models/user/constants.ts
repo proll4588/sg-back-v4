@@ -1,4 +1,6 @@
-export const GROUP_DEF = {
+//  Студенты
+
+export const STUDENT_GROUP_DEF = {
   id: true,
   title: true,
 };
@@ -6,8 +8,10 @@ export const GROUP_DEF = {
 export const STUDENT_DEF = {
   passbookNumber: true,
   name: true,
-  Group: { select: GROUP_DEF },
+  Group: { select: STUDENT_GROUP_DEF },
 };
+
+//  Пользователи
 
 export const ROLE_DEF = {
   id: true,
@@ -19,8 +23,9 @@ export const USER_DEF = {
   login: true,
   password: true,
   Role: { select: ROLE_DEF },
-  Student: { select: STUDENT_DEF },
 };
+
+//  Сотрудники
 
 export const EMPLOYEE_POSITION_DEF = {
   id: true,
@@ -31,6 +36,6 @@ export const EMPLOYEE_DEF = {
   id: true,
   name: true,
   email: true,
-  EmploeePosition: { select: EMPLOYEE_POSITION_DEF },
+  EmployeePosition: { select: EMPLOYEE_POSITION_DEF },
   User: { select: USER_DEF },
 };

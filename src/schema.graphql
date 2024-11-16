@@ -6,34 +6,41 @@ type LoginResponse {
   token: String!
 }
 
-type User {
-  id: Int!
-}
-
 type Query {
   # User #
+  # TESTED
+  getUsersRoles: [UserRole!]!
+  getUsers: [User!]!
   getUser: User
-  getUsers(roleId: Int): [User]!
-  getUsersRoles: [Role]!
-  getStudentUsers: [User]!
-
-  getEmployeePositions: [EmployeePosition!]!
-  getEmployees: [Employee!]!
   # ==== #
 
-  # Test one #
-  getTestOneQuestions: [TestOneQuestions!]!
-  getAllTestOneProcess: [TestOneProcess]!
-  getTestOneProcessByUserId(userId: Int!): TestOneProcess
-  getTestOneResults: [TestOneResult!]!
-  # ======== #
+  # Student #
+  # TESTED
+  getStudentGroups: [StudentGroup!]!
+  getStudents: [Student!]!
+  # ======= #
 
-  # Test two #
-  getAllTestTwoProcess: [TestTwoProcess!]!
-  getTestTwoQuestions: [TestTwoQuestions!]!
-  getTestTwoProcessByUserId(userId: Int!): TestTwoProcess
-  getTestTwoResults: [TestTwoResult!]!
-  # ======== #
+  # Employee #
+  # TESTED
+  getEmployeePositions: [EmployeePosition!]!
+  getEmployees: [Employee!]!
+  # ======= #
+
+  # Student test #
+  # organizer
+  # TESTED
+  getStudentTestVariants: [StudentTestVariant!]!
+  getStudentTestProcesses: [StudentTestProcessListItem!]!
+  getStudentTestProcessMembers(
+    studentTestProcessId: Int!
+  ): [StudentTestProcessMembers!]!
+  getStudentTestById(studentTestId: Int!): StudentTest
+
+  # student
+  # TESTED
+  getAvailableStudentTestProcesses: [StudentTestProcessListItemWithStudentTest!]!
+  getStudentTestQuestions(studentTestId: Int!): [StudentTestQuestion!]!
+  # ============= #
 
   # Employee test #
 
@@ -55,13 +62,33 @@ type Query {
 
 type Mutation {
   # Auth #
+  # TESTED
   login(login: String!, password: String!): LoginResponse
   # ==== #
 
   # User #
+  # TESTED
   deleteUser(userId: Int!): Boolean!
   createUser(login: String!, password: String!, roleId: Int!): User!
+  # ==== #
 
+  # Student #
+  # TESTED
+  createStudentGroup(title: String!): StudentGroup!
+  createStudent(
+    passbookNumber: Int!
+    name: String!
+    groupId: Int!
+    login: String!
+    password: String!
+  ): Student!
+
+  # Потом
+  deleteStudent(studentId: Int!): Boolean!
+  # ==== #
+
+  # Employee #
+  # TESTED
   createEmployeePosition(title: String!): EmployeePosition!
   createEmployee(
     login: String!
@@ -70,23 +97,32 @@ type Mutation {
     name: String!
     email: String!
   ): Employee!
+
+  # Потом
+  deleteEmployee(employeeId: Int!): Boolean!
   # ==== #
 
-  # Test one #
-  startTestOne(userId: Int!): TestOneProcess
-  ansTestOne(processId: Int!, questionId: Int!, ans: Int!): TestOneProcess
-  completeTestOne(processId: Int!): TestOneProcess
-  # ======== #
+  # Student test process #
+  # TESTED
+  startStudentTestProcess(
+    studentTestVariantId: Int!
+    title: String!
+    studentPassbookNumbers: [Int!]!
+  ): Boolean
+  finishStudentTestProcess(studentTestProcessId: Int!): Boolean!
 
-  # Test two #
-  startTestTwo(userId: Int!): TestTwoProcess
-  ansTestTwo(processId: Int!, questionId: Int!, ans: Boolean!): TestTwoProcess
-  completeTestTwo(processId: Int!): TestTwoProcess
-  # ======== #
-
-  # Test three #
-  processPdf(userId: Int!, file: String!): Boolean
-  # ========== #
+  #
+  startStudentTest(studentTestProcessId: Int!): Int # ok
+  answerStudentTestOne(
+    studentTestId: Int!
+    answers: [StudentTestOneAnswerInput!]!
+  ): Boolean! # ok
+  answerStudentTestTwo(
+    studentTestId: Int!
+    answers: [StudentTestTwoAnswerInput!]!
+  ): Boolean! # ok
+  answerStudentTestThree(studentTestId: Int!, fileBase64: String!): Boolean! # ok
+  # ============ #
 
   # Employee test #
 

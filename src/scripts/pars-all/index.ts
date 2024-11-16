@@ -17,7 +17,7 @@ const findAllProcessNames = (data: ParsAllData[]) => {
 
 const findAllEmployeeNames = async (data: ParsAllData[]) => {
   const names = [...new Set(data.map((d) => d.ФИО))];
-  const ans = await prisma.emplouee.findMany({
+  const ans = await prisma.employee.findMany({
     where: { name: { in: names } },
     select: { id: true, name: true },
   });
@@ -117,7 +117,7 @@ const main = async () => {
         });
 
         /* Добавляем участников процесса */
-        await prisma.emplyeeProcessMembers.createMany({
+        await prisma.employeeProcessMembers.createMany({
           data: Object.entries(employeeNames).map(([name, id]) => ({
             employeeTestProcessId: process.id,
             employeeId: id,

@@ -11,7 +11,7 @@ const main = async () => {
       answer: true,
       EmployeeTestQuestion: {
         select: {
-          EmployeeTestBlok: {
+          EmployeeTestBlock: {
             select: {
               title: true,
             },
@@ -23,7 +23,7 @@ const main = async () => {
 
   const parsed = processes.map((process) => ({
     answer: process.answer,
-    title: process.EmployeeTestQuestion.EmployeeTestBlok.title,
+    title: process.EmployeeTestQuestion.EmployeeTestBlock.title,
   }));
 
   const calc = parsed.reduce<Record<string, number>>((acc, curr) => {

@@ -1,4 +1,4 @@
-import { User } from '../../../models/user/user.js';
+import { User } from '../../../models/user/User.js';
 import { checkResolver } from '../../checkResolver.js';
 import { Role } from '../../role.js';
 import { ResolverCallbackFn, ResolverFn } from '../../type.js';

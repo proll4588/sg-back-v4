@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { throwNewGQLError } from '../../../GraphQLError/GraphQLError.js';
 import { ServerExceptions } from '../../../GraphQLError/type.js';
-import { User } from '../../../models/user/user.js';
+import { User } from '../../../models/user/User.js';
 import { checkResolver } from '../../checkResolver.js';
 import { ResolverCallbackFn, ResolverFn } from '../../type.js';
 import { signJWT } from '../../../auth/signJWT.js';

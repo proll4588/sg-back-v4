@@ -26,6 +26,8 @@ const httpServer = http.createServer(app);
 
 await server.start();
 
+app.use(express.json({ limit: '50mb' }));
+
 app.use(
   '/graphql',
   // highlight-start

@@ -1,0 +1,24 @@
+type StudentTestQuestion {
+  id: Int!
+  title: String!
+  position: Int!
+}
+
+input StudentTestOneAnswerInput {
+  questionId: Int!
+  answer: Int!
+}
+
+input StudentTestTwoAnswerInput {
+  questionId: Int!
+  answer: Boolean!
+}
+
+type StudentTest {
+  id: Int!
+  dateStart: String!
+  dateEnd: String
+  passbookNumber: String!
+  studentTestProcessId: Int!
+  StudentTestVariant: StudentTestVariant!
+}

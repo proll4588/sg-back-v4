@@ -7,251 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                  Int                   @id @default(autoincrement())
-  login               String                @unique(map: "User_pk_2") @db.VarChar(50)
-  password            String                @db.VarChar(255)
-  roleId              Int
-  passbookNumber      Int?                  @unique(map: "User_pk")
-  Emplouee            Emplouee?
-  EmployeeTestProcess EmployeeTestProcess[]
-  TestOneProcesses    TestOneProcesses[]
-  TestThreeProcess    TestThreeProcess[]
-  TestTwoProcesses    TestTwoProcesses[]
-  Role                Role                  @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "User_Role_id_fk")
-  Student             Student?              @relation(fields: [passbookNumber], references: [passbookNumber], onDelete: NoAction, onUpdate: NoAction, map: "User_Student_passbookNumber_fk")
-
-  @@index([roleId], map: "User_Role_id_fk")
-}
-
-model Role {
-  id    Int    @id @default(autoincrement())
-  title String @unique(map: "Role_pk_2") @db.VarChar(100)
-  User  User[]
-}
-
-model TestOneAnswer {
-  id               Int              @id @default(autoincrement())
-  questionId       Int
-  answer           Int
-  processId        Int
-  TestOneProcesses TestOneProcesses @relation(fields: [processId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestOneAnswer_TestOneProcesses_id_fk")
-  TestOneQuestions TestOneQuestions @relation(fields: [questionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestOneAnswer_TestOneQuestions_id_fk")
-
-  @@index([questionId], map: "TestOneAnswer_TestOneQuestions_id_fk")
-  @@index([processId], map: "TestOneAnswer_TestOneProcesses_id_fk")
-}
-
-model TestOneProcesses {
-  id            Int             @id @default(autoincrement())
-  userId        Int
-  startDate     DateTime        @db.DateTime(0)
-  endDate       DateTime?       @db.DateTime(0)
-  complete      Boolean         @default(false)
-  TestOneAnswer TestOneAnswer[]
-  User          User            @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestOneProcesses_User_id_fk")
-  TestOneResult TestOneResult[]
-
-  @@index([userId], map: "TestOneProcesses_User_id_fk")
-}
-
-model TestOneQuestions {
-  id            Int             @id @default(autoincrement())
-  text          String          @db.VarChar(255)
-  position      Int             @unique(map: "TestOneQuestions_pk_2")
-  TestOneAnswer TestOneAnswer[]
-}
-
-model TestTwoAnswer {
-  id               Int              @id @default(autoincrement())
-  questionId       Int
-  answer           Boolean
-  processId        Int
-  TestTwoProcesses TestTwoProcesses @relation(fields: [processId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestTwoAnswer_TestTwoProcesses_id_fk")
-  TestTwoQuestions TestTwoQuestions @relation(fields: [questionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestTwoAnswer_TestTwoQuestions_id_fk")
-
-  @@index([processId], map: "TestTwoAnswer_TestTwoProcesses_id_fk")
-  @@index([questionId], map: "TestTwoAnswer_TestTwoQuestions_id_fk")
-}
-
-model TestTwoProcesses {
-  id            Int             @id @default(autoincrement())
-  userId        Int
-  startDate     DateTime        @db.DateTime(0)
-  endDate       DateTime?       @db.DateTime(0)
-  complete      Boolean         @default(false)
-  TestTwoAnswer TestTwoAnswer[]
-  User          User            @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestTwoProcesses_User_id_fk")
-  TestTwoResult TestTwoResult[]
-
-  @@index([userId], map: "TestTwoProcesses_User_id_fk")
-}
-
-model TestTwoQuestions {
-  id            Int             @id @default(autoincrement())
-  text          String          @db.VarChar(1000)
-  position      Int             @unique(map: "TestTwoQuestions_pk_2")
-  TestTwoAnswer TestTwoAnswer[]
-}
-
-model TestOneResult {
-  id                Int                 @id @default(autoincrement())
-  testOneProcessId  Int
-  TestOneProcesses  TestOneProcesses    @relation(fields: [testOneProcessId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestOneResult_TestOneProcesses_id_fk")
-  TestOneResultItem TestOneResultItem[]
-
-  @@index([testOneProcessId], map: "TestOneResult_TestOneProcesses_id_fk")
-}
-
-model TestOneResultItem {
-  id              Int           @id @default(autoincrement())
-  testOneResultId Int
-  scaleId         Int
-  result          Int           @default(0)
-  testOneLevelId  Int           @default(1)
-  TestOneLevel    TestOneLevel  @relation(fields: [testOneLevelId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestOneResultItem_TestOneLevel_id_fk")
-  TestOneResult   TestOneResult @relation(fields: [testOneResultId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestOneResultItem_TestOneResult_id_fk")
-  TestOneScale    TestOneScale  @relation(fields: [scaleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestOneResultItem_TestOneScale_id_fk")
-
-  @@index([testOneResultId], map: "TestOneResultItem_TestOneResult_id_fk")
-  @@index([scaleId], map: "TestOneResultItem_TestOneScale_id_fk")
-  @@index([testOneLevelId], map: "TestOneResultItem_TestOneLevel_id_fk")
-}
-
-model TestOneScale {
-  id                Int                 @id @default(autoincrement())
-  title             String              @unique(map: "TestOneScale_pk_2") @db.VarChar(100)
-  TestOneResultItem TestOneResultItem[]
-}
-
-model TestOneLevel {
-  id                Int                 @id @default(autoincrement())
-  title             String              @db.VarChar(50)
-  TestOneResultItem TestOneResultItem[]
-}
-
-model Group {
-  id      Int       @id @default(autoincrement())
-  title   String    @unique(map: "Group_pk_2") @db.VarChar(50)
-  Student Student[]
-}
-
-model Student {
-  passbookNumber Int    @id
-  name           String @db.VarChar(100)
-  groupId        Int
-  Group          Group  @relation(fields: [groupId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Student_Group_id_fk")
-  User           User?
-
-  @@index([groupId], map: "Student_Group_id_fk")
-}
-
-model TestTwoResult {
-  id               Int              @id @default(autoincrement())
-  kom              Decimal          @db.Decimal(2, 2)
-  org              Decimal          @db.Decimal(2, 2)
-  komResult        Int
-  orgResult        Int
-  processId        Int
-  TestTwoProcesses TestTwoProcesses @relation(fields: [processId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestTwoResult_TestTwoProcesses_id_fk")
-
-  @@index([processId], map: "TestTwoResult_TestTwoProcesses_id_fk")
-}
-
-model TestThreeProcess {
-  id              Int               @id @default(autoincrement())
-  userId          Int
-  date            DateTime          @db.DateTime(0)
-  User            User              @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestThreeProcess_User_id_fk")
-  TestThreeResult TestThreeResult[]
-
-  @@index([userId], map: "TestThreeProcess_User_id_fk")
-}
-
-model TestThreeResult {
-  id                   Int                  @id @default(autoincrement())
-  resultTitleId        Int
-  result               Int
-  processId            Int
-  TestThreeProcess     TestThreeProcess     @relation(fields: [processId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestThreeResult_TestThreeProcess_id_fk")
-  TestThreeResultTitle TestThreeResultTitle @relation(fields: [resultTitleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "TestThreeResult_TestThreeResultTitle_id_fk")
-
-  @@index([resultTitleId], map: "TestThreeResult_TestThreeResultTitle_id_fk")
-  @@index([processId], map: "TestThreeResult_TestThreeProcess_id_fk")
-}
-
-model TestThreeResultTitle {
-  id              Int               @id @default(autoincrement())
-  title           String            @db.VarChar(255)
-  TestThreeResult TestThreeResult[]
-}
-
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model EmploeePosition {
-  id       Int        @id @default(autoincrement())
-  title    String     @unique(map: "EmploeePosition_pk_2") @db.VarChar(255)
-  Emplouee Emplouee[]
-}
-
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model Emplouee {
-  id                    Int                     @id @default(autoincrement())
-  positionId            Int
-  userId                Int                     @unique(map: "Emplouee_pk_2")
-  name                  String                  @db.VarChar(255)
-  email                 String                  @db.VarChar(255)
-  EmploeePosition       EmploeePosition         @relation(fields: [positionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_EmploeePosition_id_fk")
-  User                  User                    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_User_id_fk")
-  EmployeeTest          EmployeeTest[]
-  EmplyeeProcessMembers EmplyeeProcessMembers[]
+model Employee {
+  id                     Int                      @id @default(autoincrement())
+  positionId             Int
+  userId                 Int                      @unique(map: "Emplouee_pk_2")
+  name                   String                   @db.VarChar(255)
+  email                  String                   @db.VarChar(255)
+  EmployeePosition       EmployeePosition         @relation(fields: [positionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_EmploeePosition_id_fk")
+  User                   User                     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Emplouee_User_id_fk")
+  EmployeeProcessMembers EmployeeProcessMembers[]
+  EmployeeTest           EmployeeTest[]
 
   @@index([positionId], map: "Emplouee_EmploeePosition_id_fk")
 }
 
-model EmployeeTestProcess {
-  id                    Int                     @id @default(autoincrement())
-  title                 String                  @db.VarChar(255)
-  startDate             DateTime                @db.DateTime(0)
-  endDate               DateTime?               @db.DateTime(0)
-  startUserId           Int
-  employeeTestVariantId Int
-  EmployeeTest          EmployeeTest[]
-  EmployeeTestVariant   EmployeeTestVariant     @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestProcess_EmployeeTestVariant_id_fk")
-  User                  User                    @relation(fields: [startUserId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestProcess_User_id_fk")
-  EmplyeeProcessMembers EmplyeeProcessMembers[]
-
-  @@index([employeeTestVariantId], map: "EmployeeTestProcess_EmployeeTestVariant_id_fk")
-  @@index([startUserId], map: "EmployeeTestProcess_User_id_fk")
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model EmployeePosition {
+  id       Int        @id @default(autoincrement())
+  title    String     @unique(map: "EmploeePosition_pk_2") @db.VarChar(255)
+  Employee Employee[]
 }
 
-model EmployeeTestQuestion {
-  id                    Int                  @id @default(autoincrement())
-  position              Int
-  title                 String               @db.VarChar(1023)
-  employeeTestVariantId Int
-  employeeTestBlockId   Int
-  EmployeeTestAnswer    EmployeeTestAnswer[]
-  EmployeeTestBlok      EmployeeTestBlok     @relation(fields: [employeeTestBlockId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestQuestion_EmployeeTestBlok_id_fk")
-  EmployeeTestVariant   EmployeeTestVariant  @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
-
-  @@index([employeeTestVariantId], map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
-  @@index([employeeTestBlockId], map: "EmployeeTestQuestion_EmployeeTestBlok_id_fk")
-}
-
-model EmployeeTestVariant {
-  id                   Int                    @id @default(autoincrement())
-  title                String                 @db.VarChar(255)
-  EmployeeTest         EmployeeTest[]
-  EmployeeTestBlok     EmployeeTestBlok[]
-  EmployeeTestProcess  EmployeeTestProcess[]
-  EmployeeTestQuestion EmployeeTestQuestion[]
-}
-
-model EmplyeeProcessMembers {
+model EmployeeProcessMembers {
   id                    Int                 @id @default(autoincrement())
   employeeTestProcessId Int
   employeeId            Int
-  Emplouee              Emplouee            @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmplyeeProcessMembers_Emplouee_id_fk")
+  Employee              Employee            @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmplyeeProcessMembers_Emplouee_id_fk")
   EmployeeTestProcess   EmployeeTestProcess @relation(fields: [employeeTestProcessId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmplyeeProcessMembers_EmployeeTestProcess_id_fk")
 
   @@index([employeeId], map: "EmplyeeProcessMembers_Emplouee_id_fk")
@@ -265,14 +47,14 @@ model EmployeeTest {
   startDate             DateTime             @db.DateTime(0)
   endDate               DateTime?            @db.DateTime(0)
   employeeTestVariantId Int
-  Emplouee              Emplouee             @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTest_Emplouee_id_fk")
   EmployeeTestProcess   EmployeeTestProcess  @relation(fields: [employeeTestProcessId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTest_EmployeeTestProcess_id_fk")
   EmployeeTestVariant   EmployeeTestVariant  @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTest_EmployeeTestVariant_id_fk")
+  Employee              Employee             @relation(fields: [employeeId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTest_Employee_id_fk")
   EmployeeTestAnswer    EmployeeTestAnswer[]
 
-  @@index([employeeId], map: "EmployeeTest_Emplouee_id_fk")
   @@index([employeeTestProcessId], map: "EmployeeTest_EmployeeTestProcess_id_fk")
   @@index([employeeTestVariantId], map: "EmployeeTest_EmployeeTestVariant_id_fk")
+  @@index([employeeId], map: "EmployeeTest_Employee_id_fk")
 }
 
 model EmployeeTestAnswer {
@@ -287,7 +69,7 @@ model EmployeeTestAnswer {
   @@index([employeeTestId], map: "EmployeeTestAnswer_EmployeeTest_id_fk")
 }
 
-model EmployeeTestBlok {
+model EmployeeTestBlock {
   id                    Int                    @id @default(autoincrement())
   employeeTestVariantId Int
   title                 String                 @db.VarChar(255)
@@ -295,4 +77,256 @@ model EmployeeTestBlok {
   EmployeeTestQuestion  EmployeeTestQuestion[]
 
   @@index([employeeTestVariantId], map: "EmployeeTestBlok_EmployeeTestVariant_id_fk")
+}
+
+model EmployeeTestProcess {
+  id                     Int                      @id @default(autoincrement())
+  title                  String                   @db.VarChar(255)
+  startDate              DateTime                 @db.DateTime(0)
+  endDate                DateTime?                @db.DateTime(0)
+  startUserId            Int
+  employeeTestVariantId  Int
+  EmployeeProcessMembers EmployeeProcessMembers[]
+  EmployeeTest           EmployeeTest[]
+  EmployeeTestVariant    EmployeeTestVariant      @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestProcess_EmployeeTestVariant_id_fk")
+  User                   User                     @relation(fields: [startUserId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestProcess_User_id_fk")
+
+  @@index([employeeTestVariantId], map: "EmployeeTestProcess_EmployeeTestVariant_id_fk")
+  @@index([startUserId], map: "EmployeeTestProcess_User_id_fk")
+}
+
+model EmployeeTestQuestion {
+  id                    Int                  @id @default(autoincrement())
+  position              Int
+  title                 String               @db.VarChar(1023)
+  employeeTestVariantId Int
+  employeeTestBlockId   Int
+  EmployeeTestAnswer    EmployeeTestAnswer[]
+  EmployeeTestBlock     EmployeeTestBlock    @relation(fields: [employeeTestBlockId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestQuestion_EmployeeTestBlok_id_fk")
+  EmployeeTestVariant   EmployeeTestVariant  @relation(fields: [employeeTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
+
+  @@index([employeeTestBlockId], map: "EmployeeTestQuestion_EmployeeTestBlok_id_fk")
+  @@index([employeeTestVariantId], map: "EmployeeTestQuestion_EmployeeTestVariant_id_fk")
+}
+
+model EmployeeTestVariant {
+  id                   Int                    @id @default(autoincrement())
+  title                String                 @db.VarChar(255)
+  EmployeeTest         EmployeeTest[]
+  EmployeeTestBlock    EmployeeTestBlock[]
+  EmployeeTestProcess  EmployeeTestProcess[]
+  EmployeeTestQuestion EmployeeTestQuestion[]
+}
+
+model Group {
+  id      Int       @id @default(autoincrement())
+  title   String    @unique(map: "Group_pk_2") @db.VarChar(50)
+  Student Student[]
+}
+
+model Role {
+  id       Int     @id @default(autoincrement())
+  title    String  @unique(map: "Role_pk_2") @db.VarChar(100)
+  isCommon Boolean @default(false)
+  User     User[]
+}
+
+model Student {
+  passbookNumber            Int                         @id
+  name                      String                      @db.VarChar(100)
+  groupId                   Int
+  userId                    Int                         @unique(map: "Student_pk")
+  Group                     Group                       @relation(fields: [groupId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Student_Group_id_fk")
+  User                      User                        @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Student_User_id_fk")
+  StudentTest               StudentTest[]
+  StudentTestProcessMembers StudentTestProcessMembers[]
+
+  @@index([groupId], map: "Student_Group_id_fk")
+}
+
+model StudentTest {
+  id                     Int                      @id @default(autoincrement())
+  passbookNumber         Int
+  studentTestProcessId   Int
+  dateStart              DateTime                 @db.DateTime(0)
+  dateEnd                DateTime?                @db.DateTime(0)
+  studentTestVariantId   Int
+  StudentTestProcess     StudentTestProcess       @relation(fields: [studentTestProcessId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTest_StudentTestProcess_id_fk")
+  StudentTestVariant     StudentTestVariant       @relation(fields: [studentTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTest_StudentTestVariant_id_fk")
+  Student                Student                  @relation(fields: [passbookNumber], references: [passbookNumber], onDelete: NoAction, onUpdate: NoAction, map: "StudentTest_Student_passbookNumber_fk")
+  StudentTestOneAnswer   StudentTestOneAnswer[]
+  StudentTestOneResult   StudentTestOneResult[]
+  StudentTestThreeResult StudentTestThreeResult[]
+  StudentTestTwoAnswer   StudentTestTwoAnswer[]
+  StudentTestTwoResult   StudentTestTwoResult[]
+
+  @@index([studentTestProcessId], map: "StudentTest_StudentTestProcess_id_fk")
+  @@index([studentTestVariantId], map: "StudentTest_StudentTestVariant_id_fk")
+  @@index([passbookNumber], map: "StudentTest_Student_passbookNumber_fk")
+}
+
+model StudentTestOneAnswer {
+  id                    Int                 @id @default(autoincrement())
+  studentTestId         Int
+  studentTestQuestionId Int
+  answer                Int
+  StudentTestQuestion   StudentTestQuestion @relation(fields: [studentTestQuestionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestOneAnswer_StudentTestQuestion_id_fk")
+  StudentTest           StudentTest         @relation(fields: [studentTestId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestOneAnswer_StudentTest_id_fk")
+
+  @@index([studentTestQuestionId], map: "StudentTestOneAnswer_StudentTestQuestion_id_fk")
+  @@index([studentTestId], map: "StudentTestOneAnswer_StudentTest_id_fk")
+}
+
+model StudentTestOneLevel {
+  id                       Int                        @id @default(autoincrement())
+  title                    String                     @db.VarChar(50)
+  StudentTestOneResultItem StudentTestOneResultItem[]
+}
+
+model StudentTestOneResult {
+  id                       Int                        @id @default(autoincrement())
+  studentTestId            Int
+  StudentTest              StudentTest                @relation(fields: [studentTestId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestOneResult_StudentTest_id_fk")
+  StudentTestOneResultItem StudentTestOneResultItem[]
+
+  @@index([studentTestId], map: "StudentTestOneResult_StudentTest_id_fk")
+}
+
+model StudentTestOneResultItem {
+  id                     Int                  @id @default(autoincrement())
+  studentTestOneResultId Int
+  studentTestOneLevelId  Int
+  studentTestOneScaleId  Int
+  result                 Decimal              @db.Decimal(5, 2)
+  StudentTestOneLevel    StudentTestOneLevel  @relation(fields: [studentTestOneLevelId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestOneResultItem_StudentTestOneLevel_id_fk")
+  StudentTestOneResult   StudentTestOneResult @relation(fields: [studentTestOneResultId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestOneResultItem_StudentTestOneResult_id_fk")
+  StudentTestOneScale    StudentTestOneScale  @relation(fields: [studentTestOneScaleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestOneResultItem_StudentTestOneScale_id_fk")
+
+  @@index([studentTestOneLevelId], map: "StudentTestOneResultItem_StudentTestOneLevel_id_fk")
+  @@index([studentTestOneResultId], map: "StudentTestOneResultItem_StudentTestOneResult_id_fk")
+  @@index([studentTestOneScaleId], map: "StudentTestOneResultItem_StudentTestOneScale_id_fk")
+}
+
+model StudentTestOneScale {
+  id                       Int                        @id @default(autoincrement())
+  title                    String                     @unique(map: "TestOneScale_pk_2") @db.VarChar(100)
+  StudentTestOneResultItem StudentTestOneResultItem[]
+}
+
+model StudentTestProcess {
+  id                        Int                         @id @default(autoincrement())
+  userId                    Int
+  studentTestVariantId      Int
+  dateStart                 DateTime                    @db.DateTime(0)
+  dateEnd                   DateTime?                   @db.DateTime(0)
+  title                     String                      @unique(map: "StudentTestProcess_pk_2") @db.VarChar(255)
+  StudentTest               StudentTest[]
+  StudentTestVariant        StudentTestVariant          @relation(fields: [studentTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestProcess_StudentTestVariant_id_fk")
+  User                      User                        @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestProcess_User_id_fk")
+  StudentTestProcessMembers StudentTestProcessMembers[]
+
+  @@index([studentTestVariantId], map: "StudentTestProcess_StudentTestVariant_id_fk")
+  @@index([userId], map: "StudentTestProcess_User_id_fk")
+}
+
+model StudentTestProcessMembers {
+  id                   Int                @id @default(autoincrement())
+  studentTestProcessId Int
+  passbookNumber       Int
+  StudentTestProcess   StudentTestProcess @relation(fields: [studentTestProcessId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestProcessMembers_StudentTestProcess_id_fk")
+  Student              Student            @relation(fields: [passbookNumber], references: [passbookNumber], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestProcessMembers_Student_passbookNumber_fk")
+
+  @@index([studentTestProcessId], map: "StudentTestProcessMembers_StudentTestProcess_id_fk")
+  @@index([passbookNumber], map: "StudentTestProcessMembers_Student_passbookNumber_fk")
+}
+
+model StudentTestQuestion {
+  id                   Int                    @id @default(autoincrement())
+  title                String                 @db.VarChar(1023)
+  studentTestVariantId Int
+  position             Int
+  StudentTestOneAnswer StudentTestOneAnswer[]
+  StudentTestVariant   StudentTestVariant     @relation(fields: [studentTestVariantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestQuestion_StudentTestVariant_id_fk")
+  StudentTestTwoAnswer StudentTestTwoAnswer[]
+
+  @@index([studentTestVariantId], map: "StudentTestQuestion_StudentTestVariant_id_fk")
+}
+
+model StudentTestThreeResult {
+  id                            Int                         @id @default(autoincrement())
+  studentTestId                 Int
+  studentTestThreeResultTitleId Int
+  result                        Decimal                     @db.Decimal(5, 2)
+  StudentTestThreeResultTitle   StudentTestThreeResultTitle @relation(fields: [studentTestThreeResultTitleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestThreeResult_StudentTestThreeResultTitle_id_fk")
+  StudentTest                   StudentTest                 @relation(fields: [studentTestId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestThreeResult_StudentTest_id_fk")
+
+  @@index([studentTestThreeResultTitleId], map: "StudentTestThreeResult_StudentTestThreeResultTitle_id_fk")
+  @@index([studentTestId], map: "StudentTestThreeResult_StudentTest_id_fk")
+}
+
+model StudentTestThreeResultTitle {
+  id                     Int                      @id @default(autoincrement())
+  title                  String                   @db.VarChar(255)
+  StudentTestThreeResult StudentTestThreeResult[]
+}
+
+model StudentTestTwoAnswer {
+  id                    Int                 @id @default(autoincrement())
+  studentTestId         Int
+  studentTestQuestionId Int
+  answer                Boolean
+  StudentTestQuestion   StudentTestQuestion @relation(fields: [studentTestQuestionId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestTwoAnswer_StudentTestQuestion_id_fk")
+  StudentTest           StudentTest         @relation(fields: [studentTestId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestTwoAnswer_StudentTest_id_fk")
+
+  @@index([studentTestQuestionId], map: "StudentTestTwoAnswer_StudentTestQuestion_id_fk")
+  @@index([studentTestId], map: "StudentTestTwoAnswer_StudentTest_id_fk")
+}
+
+model StudentTestTwoResult {
+  id            Int         @id @default(autoincrement())
+  studentTestId Int
+  kom           Decimal     @db.Decimal(5, 2)
+  org           Decimal     @db.Decimal(5, 2)
+  komResult     Decimal     @db.Decimal(5, 2)
+  orgResult     Decimal     @db.Decimal(5, 2)
+  StudentTest   StudentTest @relation(fields: [studentTestId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "StudentTestTwoResult___fk")
+
+  @@index([studentTestId], map: "StudentTestTwoResult___fk")
+}
+
+model StudentTestVariant {
+  id                  Int                   @id @default(autoincrement())
+  title               String                @unique(map: "StudentTestVariant_pk_2") @db.VarChar(255)
+  StudentTest         StudentTest[]
+  StudentTestProcess  StudentTestProcess[]
+  StudentTestQuestion StudentTestQuestion[]
+}
+
+model User {
+  id                  Int                   @id @default(autoincrement())
+  login               String                @unique(map: "User_pk_2") @db.VarChar(50)
+  password            String                @db.VarChar(255)
+  roleId              Int
+  Employee            Employee?
+  EmployeeTestProcess EmployeeTestProcess[]
+  Student             Student?
+  StudentTestProcess  StudentTestProcess[]
+  Role                Role                  @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "User_Role_id_fk")
+
+  @@index([roleId], map: "User_Role_id_fk")
+}
+
+model StudentAttestation {
+  id             Int      @id @default(autoincrement())
+  priod          DateTime @db.DateTime(0)
+  formOfStudy    String   @db.VarChar(100)
+  controlPeriod  String   @db.VarChar(100)
+  passbookNumber Int
+  courseTitle    String   @db.VarChar(1000)
+  studentName    String   @db.VarChar(1023)
+  att1           Int?
+  att2           Int?
+  att3           Int?
+  extra          Int?
+  exam           Int?
 }
